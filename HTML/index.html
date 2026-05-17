@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SmartHub - Điện thoại & Phụ kiện</title>
+  <link rel="stylesheet" href="../CSS/index_styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="sh-header">
+    <div class="container sh-header__inner">
+      <div class="sh-brand">
+        <div class="sh-logo">SmartHub</div>
+        <div class="sh-logo-sub">Điện thoại • Phụ kiện</div>
+      </div>
+
+      <form class="sh-search" role="search">
+        <input id="searchInput" type="search" placeholder="Nhập tên điện thoại, hãng..." />
+        <button type="button" id="searchBtn">🔍</button>
+      </form>
+
+      <div class="sh-actions">
+        <a href="#" class="sh-action"><span class="sh-action__icon">🛒</span><span class="sh-action__label">Giỏ hàng</span></a>
+        <a href="#" class="sh-action"><span class="sh-action__icon">👤</span><span class="sh-action__label">Tài khoản</span></a>
+      </div>
+    </div>
+    <nav class="sh-nav-container">
+      <div class="container sh-nav">
+        <a href="#" class="sh-nav__link active">Trang chủ</a>
+        <a href="#" class="sh-nav__link">Điện thoại</a>
+        <a href="#" class="sh-nav__link">Phụ kiện</a>
+        <a href="#" class="sh-nav__link">Tin công nghệ</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="sh-main">
+    <div class="container sh-top-spacer"></div>
+    <section class="container sh-banner">
+
+      <div class="sh-banner__grid">
+        <div class="sh-banner__slider">
+          <div class="sh-slider" data-slider>
+            <div class="sh-slide is-active" data-slide>
+              <div class="sh-slide__content">
+                <div class="sh-slide__tag">Khuyến mãi</div>
+                <h2 class="sh-slide__title">Sale iPhone giảm <span class="sh-accent">20%</span></h2>
+                <p class="sh-slide__desc">Giá sốc cuối tuần - Số lượng có hạn.</p>
+                <div class="sh-slide__cta">
+                  <a class="sh-btn sh-btn--primary" href="#">Mua ngay</a>
+                </div>
+              </div>
+              <div class="sh-slide__visual"><div class="sh-phone">📱</div></div>
+            </div>
+
+            <div class="sh-slide" data-slide>
+              <div class="sh-slide__content">
+                <div class="sh-slide__tag">Trả góp</div>
+                <h2 class="sh-slide__title">Trả góp <span class="sh-accent">0%</span> - Duyệt nhanh</h2>
+                <p class="sh-slide__desc">Tối ưu chi phí, thủ tục đơn giản.</p>
+                <div class="sh-slide__cta">
+                  <a class="sh-btn sh-btn--primary" href="#">Trả góp online</a>
+                </div>
+              </div>
+              <div class="sh-slide__visual"><div class="sh-credit">💳</div></div>
+            </div>
+
+            <button class="sh-slider__arrow sh-slider__arrow--left" type="button" data-prev>‹</button>
+            <button class="sh-slider__arrow sh-slider__arrow--right" type="button" data-next>›</button>
+            <div class="sh-slider__dots" data-dots></div>
+          </div>
+        </div>
+
+        <div class="sh-banner__side">
+          <a class="sh-mini-banner sh-mini-banner--1" href="#">
+            <div class="sh-mini-banner__top">Phụ kiện</div>
+            <div class="sh-mini-banner__title">Tai nghe giảm đến 30%</div>
+            <div class="sh-mini-banner__foot">Giao nhanh 2H</div>
+          </a>
+          <a class="sh-mini-banner sh-mini-banner--2" href="#">
+            <div class="sh-mini-banner__top">Sạc & Cáp</div>
+            <div class="sh-mini-banner__title">Trả góp 0% - Dùng liền</div>
+            <div class="sh-mini-banner__foot">Chính hãng 100%</div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="container sh-products">
+      <aside class="sh-filters">
+        <div class="sh-panel">
+          <div class="sh-panel__header">
+            <h3 class="sh-panel__title">Bộ lọc</h3>
+            <button type="button" class="sh-link-btn" id="resetFilters">Đặt lại</button>
+          </div>
+
+          <div class="sh-filter">
+            <div class="sh-filter__label">Hãng</div>
+            <div class="sh-chips">
+              <label class="sh-chip"><input type="checkbox" name="brand" value="Apple" /> Apple</label>
+              <label class="sh-chip"><input type="checkbox" name="brand" value="Samsung" /> Samsung</label>
+              <label class="sh-chip"><input type="checkbox" name="brand" value="Xiaomi" /> Xiaomi</label>
+            </div>
+          </div>
+
+          <div class="sh-filter">
+            <div class="sh-filter__label">Khoảng giá (VND)</div>
+            <div class="sh-range">
+              <input id="minPrice" type="number" placeholder="Tối thiểu" />
+              <span>-</span>
+              <input id="maxPrice" type="number" placeholder="Tối đa" />
+            </div>
+          </div>
+
+          <div class="sh-filter">
+            <div class="sh-filter__label">RAM</div>
+            <div class="sh-chips">
+              <label class="sh-chip"><input type="checkbox" name="ram" value="8" /> 8GB</label>
+              <label class="sh-chip"><input type="checkbox" name="ram" value="12" /> 12GB</label>
+              <label class="sh-chip"><input type="checkbox" name="ram" value="16" /> 16GB</label>
+            </div>
+          </div>
+
+          <div class="sh-filter sh-filter--tog">
+            <label class="sh-toggle">
+              <input type="checkbox" id="onlyNew" />
+              <span class="sh-toggle__box"></span>
+              <span class="sh-toggle__text">Sản phẩm đánh giá cao</span>
+            </label>
+          </div>
+
+          <div class="sh-filter">
+            <button class="sh-btn sh-btn--primary sh-btn--full" type="button" id="applyFilters">Áp dụng</button>
+          </div>
+        </div>
+
+        <div class="sh-feature-cards">
+          <button class="sh-feature-card" type="button" id="openCompare">
+            <div class="sh-feature-card__icon">⚖️</div>
+            <div class="sh-feature-card__content">
+              <div class="sh-feature-card__title">So sánh sản phẩm</div>
+              <div class="sh-feature-card__desc">Chọn tối đa 3 sản phẩm</div>
+            </div>
+          </button>
+        </div>
+      </aside>
+
+      <div class="sh-products__content">
+        <div class="sh-toolbar">
+          <div class="sh-toolbar__left">
+            <h3 class="sh-h3">Điện thoại nổi bật</h3>
+            <div class="sh-result">Tìm thấy: <span id="resultCount">0</span></div>
+          </div>
+          <div class="sh-toolbar__right">
+            <label class="sh-select">
+              <select id="sortSelect">
+                <option value="featured">Nổi bật</option>
+                <option value="price-asc">Giá tăng dần</option>
+                <option value="price-desc">Giá giảm dần</option>
+                <option value="rating-desc">Đánh giá cao</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <div class="sh-product-grid" id="productGrid"></div>
+
+        <div class="sh-pagination">
+          <button class="sh-btn sh-btn--ghost" type="button" id="prevPage">‹</button>
+          <div class="sh-pagination__info">Trang <span id="pageInfo">1</span></div>
+          <button class="sh-btn sh-btn--ghost" type="button" id="nextPage">›</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="sh-modal" id="compareModal">
+    <div class="sh-modal__backdrop" data-close></div>
+    <div class="sh-modal__content">
+      <div class="sh-modal__header">
+        <h3>So sánh sản phẩm</h3>
+        <button class="sh-modal__close" type="button" data-close>✕</button>
+      </div>
+      <div class="sh-compare" id="compareTable"></div>
+      <div class="sh-modal__footer">
+        <button class="sh-btn sh-btn--ghost" type="button" id="clearCompare">Xóa chọn</button>
+        <button class="sh-btn sh-btn--primary" type="button" data-close>Đồng ý</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="sh-footer">
+    <div class="container sh-footer__grid">
+      <div class="sh-footer__col">
+        <div class="sh-footer__title">Giới thiệu</div>
+        <a href="#" class="sh-footer__link">Về SmartHub</a>
+        <a href="#" class="sh-footer__link">Tuyển dụng</a>
+      </div>
+      <div class="sh-footer__col">
+        <div class="sh-footer__title">Chính sách</div>
+        <a href="#" class="sh-footer__link">Bảo hành</a>
+        <a href="#" class="sh-footer__link">Đổi trả</a>
+      </div>
+      <div class="sh-footer__col sh-footer__col--contact">
+        <div class="sh-footer__title">Liên hệ</div>
+        <div class="sh-footer__text">Hotline: <b>1900 0000</b></div>
+        <div class="sh-footer__text">Email: <b>support@smarthub.vn</b></div>
+      </div>
+    </div>
+    <div class="container sh-footer__bottom">
+      <div>© <span id="year"></span> SmartHub. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script src="../JS/index_scrip.js"></script>
+</body>
+</html>
