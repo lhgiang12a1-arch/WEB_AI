@@ -1,341 +1,517 @@
 <!doctype html>
-<html lang="vi">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SmartHub - Điện thoại & Phụ kiện</title>
-  <link rel="stylesheet" href="../CSS/style.css" />
+<html lang="vi" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Asme — Know it then all</title>
 
-</head>
-<body>
-  <!-- HEADER -->
-  <header class="sh-header">
-    <div class="container sh-header__inner">
-      <a class="sh-brand" href="#">
-        <div class="sh-logo">SmartHub</div>
-        <div class="sh-logo-sub">Điện thoại • Phụ kiện • Công nghệ</div>
-      </a>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
 
-      <div class="sh-search" role="search" aria-label="Tìm kiếm sản phẩm">
-        <input id="searchInput" type="search" placeholder="Tìm iPhone, Samsung, Xiaomi, phụ kiện..." />
-        <button id="searchBtn" type="button" aria-label="Tìm kiếm">🔎</button>
-      </div>
+    <!-- Cấu hình custom font Instrument Serif cho Tailwind -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              instrument: ['"Instrument Serif"', "serif"],
+            },
+          },
+        },
+      };
+    </script>
 
-      <nav class="sh-actions" aria-label="Tiện ích & tài khoản">
-        <a class="sh-action" href="#">
-          <span aria-hidden="true">🛒</span><span>Giỏ hàng</span>
-        </a>
-        <a class="sh-action" href="#">
-          <span aria-hidden="true">👤</span><span>Tài khoản</span>
-        </a>
-        <a class="sh-action" href="#">
-          <span aria-hidden="true">❤️</span><span>Yêu thích</span>
-        </a>
-      </nav>
-    </div>
+    <!-- Liên kết file CSS riêng biệt -->
+    <link rel="stylesheet" href="../CSS/index_styles.css" />
+  </head>
+  <body
+    class="bg-black text-white selection:bg-white/20 antialiased overflow-x-hidden"
+  >
+    <!-- ==========================================
+       SECTION 1 -- HERO SECTION
+       ========================================== -->
+    <div class="relative min-h-screen flex flex-col overflow-hidden bg-black">
+      <!-- Background Video -->
+      <video
+        id="hero-video"
+        src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260405_074625_a81f018a-956b-43fb-9aee-4d1508e30e6a.mp4"
+        class="absolute inset-0 w-full h-full object-cover object-bottom pointer-events-none"
+        style="opacity: 0"
+        muted
+        autoplay
+        playsinline
+        preload="auto"
+      ></video>
 
-    <div class="sh-nav-container">
-      <div class="container">
-        <nav class="sh-nav" aria-label="Menu điều hướng">
-          <a class="sh-nav__link active" href="#home">Trang chủ</a>
-          <a class="sh-nav__link" href="#dien-thoai">Điện thoại</a>
-          <a class="sh-nav__link" href="#iphone">iPhone</a>
-          <a class="sh-nav__link" href="#samsung">Samsung</a>
-          <a class="sh-nav__link" href="#xiaomi">Xiaomi</a>
-          <a class="sh-nav__link" href="#phu-kien">Phụ kiện</a>
-          <a class="sh-nav__link" href="#tin-cong-nghe">Tin công nghệ</a>
-        </nav>
-      </div>
-    </div>
-  </header>
+      <!-- Dark gradient overlay -->
+      <div class="absolute inset-0 bg-black/40 pointer-events-none z-0"></div>
 
-  <!-- MAIN -->
-  <main class="sh-main" id="home">
-    <div class="container">
-      <!-- BANNER -->
-      <section class="sh-banner__grid" aria-label="Banner khuyến mãi">
-        <div class="sh-banner__slider" data-slider>
-          <div class="sh-slide is-active" data-slide>
-            <div class="sh-slide__content">
-              <div class="sh-slide__title">Sale <span class="sh-accent">iPhone</span> giảm đến 20%</div>
-              <div class="sh-slide__desc">Ưu đãi trực tiếp hôm nay - số lượng có hạn</div>
-              <div style="display:flex; gap:12px; flex-wrap:wrap;">
-                <button class="sh-btn sh-btn--primary" type="button">Mua iPhone ngay</button>
-                <button class="sh-btn sh-btn--ghost" type="button">Xem ưu đãi</button>
-              </div>
-            </div>
-            <div class="sh-slide__visual" aria-hidden="true">%</div>
+      <!-- Navbar -->
+      <header class="relative w-full z-20 px-6 py-6">
+        <div
+          class="liquid-glass rounded-full max-w-5xl mx-auto px-6 py-3 flex items-center justify-between"
+        >
+          <div class="flex items-center gap-2">
+            <!-- Globe SVG Icon -->
+            <svg
+              class="w-6 h-6 text-white"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
+              <path d="M2 12h20" />
+            </svg>
+            <span class="text-white font-semibold text-lg tracking-tight"
+              >Asme</span
+            >
+
+            <nav class="hidden md:flex items-center gap-8 ml-8">
+              <a
+                href="#features"
+                class="text-white/80 hover:text-white text-sm font-medium transition-colors"
+                >Features</a
+              >
+              <a
+                href="#pricing"
+                class="text-white/80 hover:text-white text-sm font-medium transition-colors"
+                >Pricing</a
+              >
+              <a
+                href="#about"
+                class="text-white/80 hover:text-white text-sm font-medium transition-colors"
+                >About</a
+              >
+            </nav>
           </div>
 
-          <div class="sh-slide" data-slide>
-            <div class="sh-slide__content">
-              <div class="sh-slide__title"><span class="sh-accent">Trả góp</span> 0%</div>
-              <div class="sh-slide__desc">Duyệt nhanh • Linh hoạt theo nhu cầu</div>
-              <div style="display:flex; gap:12px; flex-wrap:wrap;">
-                <button class="sh-btn sh-btn--primary" type="button">Tính trả góp</button>
-                <button class="sh-btn sh-btn--ghost" type="button">Xem điều kiện</button>
-              </div>
-            </div>
-            <div class="sh-slide__visual" aria-hidden="true">0%</div>
+          <div class="flex items-center gap-4">
+            <button
+              class="text-white text-sm font-medium hover:text-white/80 transition-colors"
+            >
+              Sign Up
+            </button>
+            <button
+              class="liquid-glass rounded-full px-6 py-2 text-white text-sm font-medium hover:bg-white/5 transition-colors"
+            >
+              Login
+            </button>
           </div>
+        </div>
+      </header>
 
-          <div class="sh-slide" data-slide>
-            <div class="sh-slide__content">
-              <div class="sh-slide__title">Thu cũ <span class="sh-accent">đổi mới</span></div>
-              <div class="sh-slide__desc">Đánh giá nhanh - cộng thêm giá trị hấp dẫn</div>
-              <div style="display:flex; gap:12px; flex-wrap:wrap;">
-                <button class="sh-btn sh-btn--primary" type="button">Bắt đầu thu cũ</button>
-                <button class="sh-btn sh-btn--ghost" type="button">Tra giá thu cũ</button>
-              </div>
-            </div>
-            <div class="sh-slide__visual" aria-hidden="true">↻</div>
+      <!-- Hero Content -->
+      <main
+        class="relative z-10 flex-1 flex flex-col items-center justify-center px-6 py-12 text-center -translate-y-[20%]"
+      >
+        <h1
+          class="text-6xl sm:text-7xl md:text-8xl lg:text-9xl text-white tracking-tight whitespace-nowrap font-instrument mb-8 select-none"
+        >
+          Know it then <em class="italic font-normal font-instrument">all</em>.
+        </h1>
+
+        <div
+          class="max-w-xl w-full px-4 mb-6 h-[64px] flex items-center justify-center"
+        >
+          <!-- Subscription Form -->
+          <form
+            id="subscribe-form"
+            class="liquid-glass rounded-full pl-6 pr-2 py-2 flex items-center justify-between gap-3 w-full transition-all duration-300"
+          >
+            <input
+              type="email"
+              required
+              placeholder="Enter your email"
+              class="bg-transparent text-white placeholder:text-white/40 outline-none w-full text-sm md:text-base font-medium"
+            />
+            <button
+              type="submit"
+              class="bg-white rounded-full p-3 text-black hover:bg-white/90 transition-all flex items-center justify-center flex-shrink-0"
+            >
+              <!-- Arrow Right SVG Icon -->
+              <svg
+                class="w-5 h-5"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M5 12h14" />
+                <path d="m12 5 7 7-7 7" />
+              </svg>
+            </button>
+          </form>
+
+          <!-- Success Message -->
+          <div
+            id="success-message"
+            class="hidden liquid-glass rounded-full py-4 px-6 text-white text-sm md:text-base font-medium flex items-center justify-center gap-2 w-full animate-pulse"
+          >
+            <span>Thank you for subscribing!</span>
           </div>
-
-          <button class="sh-slider__arrow sh-slider__arrow--left" type="button" data-prev aria-label="Trượt banner sang trái">‹</button>
-          <button class="sh-slider__arrow sh-slider__arrow--right" type="button" data-next aria-label="Trượt banner sang phải">›</button>
-          <div class="sh-slider__dots" data-dots aria-hidden="true"></div>
         </div>
 
-        <aside class="sh-banner__side" aria-label="Banner phụ">
-          <div class="sh-mini-banner">
-            <div class="sh-mini-banner__title">Tai nghe</div>
-            <div class="sh-mini-banner__top">Âm thanh rõ • Đeo êm</div>
-            <div class="sh-mini-banner__foot">Giảm đến 30%</div>
-          </div>
-          <div class="sh-mini-banner">
-            <div class="sh-mini-banner__title">Sạc nhanh</div>
-            <div class="sh-mini-banner__top">Tăng tốc • An toàn</div>
-            <div class="sh-mini-banner__foot">Chính hãng</div>
-          </div>
-        </aside>
-      </section>
+        <p class="text-white text-sm leading-relaxed max-w-lg px-4 mb-8">
+          Stay updated with the latest news and insights. Subscribe to our
+          newsletter today and never miss out on exciting updates.
+        </p>
 
-      <!-- PRODUCTS + SIDEBAR -->
-      <section class="sh-products">
-        <!-- LEFT FILTER -->
-        <aside class="sh-panel" aria-label="Bộ lọc sản phẩm">
-          <div class="sh-panel__header">
-            <div style="font-weight:900; font-size:1.05rem;">Bộ lọc</div>
-            <button class="sh-link-btn" id="resetFilters" type="button">Xóa lọc</button>
-          </div>
+        <button
+          class="liquid-glass rounded-full px-8 py-3 text-white text-sm font-medium hover:bg-white/10 transition-all duration-300 transform hover:scale-105 active:scale-95"
+        >
+          Read our manifesto
+        </button>
+      </main>
 
-          <div class="sh-filter">
-            <div class="sh-filter__label">Hãng</div>
-            <div class="sh-chips">
-              <label class="sh-chip"><input type="checkbox" name="brand" value="Apple" /> Apple</label>
-              <label class="sh-chip"><input type="checkbox" name="brand" value="Samsung" /> Samsung</label>
-              <label class="sh-chip"><input type="checkbox" name="brand" value="Xiaomi" /> Xiaomi</label>
+      <!-- Social Footer -->
+      <footer class="relative z-10 flex justify-center gap-4 pb-12">
+        <a
+          href="#"
+          class="liquid-glass rounded-full p-4 text-white/80 hover:text-white hover:bg-white/5 transition-all duration-300 transform hover:scale-110"
+        >
+          <!-- Instagram SVG Icon -->
+          <svg
+            class="w-5 h-5"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+            <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+          </svg>
+        </a>
+        <a
+          href="#"
+          class="liquid-glass rounded-full p-4 text-white/80 hover:text-white hover:bg-white/5 transition-all duration-300 transform hover:scale-110"
+        >
+          <!-- Twitter SVG Icon -->
+          <svg
+            class="w-5 h-5"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path
+              d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"
+            />
+          </svg>
+        </a>
+        <a
+          href="#"
+          class="liquid-glass rounded-full p-4 text-white/80 hover:text-white hover:bg-white/5 transition-all duration-300 transform hover:scale-110"
+        >
+          <!-- Globe SVG Icon -->
+          <svg
+            class="w-5 h-5"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="12" cy="12" r="10" />
+            <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
+            <path d="M2 12h20" />
+          </svg>
+        </a>
+      </footer>
+    </div>
+
+    <!-- ==========================================
+       SECTION 2 -- ABOUT SECTION
+       ========================================== -->
+    <section
+      id="about"
+      class="bg-black pt-32 md:pt-44 pb-10 md:pb-14 px-6 overflow-hidden relative"
+    >
+      <div
+        class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(255,255,255,0.03)_0%,_transparent_70%)] pointer-events-none"
+      ></div>
+
+      <div class="max-w-6xl mx-auto relative z-10">
+        <span
+          class="reveal-item inline-block text-white/40 text-sm tracking-widest uppercase mb-6 font-mono"
+        >
+          About Us
+        </span>
+
+        <h2
+          class="reveal-item text-4xl md:text-6xl lg:text-7xl text-white leading-[1.1] tracking-tight max-w-5xl font-instrument"
+        >
+          <span class="font-instrument italic text-white/60"
+            >Pioneering then ideas</span
+          >
+          for <br class="hidden md:inline" />
+          <span class="font-instrument italic text-white/60"
+            >minds that then create, build, and inspire.</span
+          >
+        </h2>
+      </div>
+    </section>
+
+    <!-- ==========================================
+       SECTION 3 -- FEATURED VIDEO
+       ========================================== -->
+    <section class="bg-black pt-6 md:pt-10 pb-20 md:pb-32 px-6 overflow-hidden">
+      <div class="max-w-6xl mx-auto">
+        <div
+          class="reveal-item rounded-3xl overflow-hidden aspect-video relative w-full h-full"
+        >
+          <video
+            src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260402_054547_9875cfc5-155a-4229-8ec8-b7ba7125cbf8.mp4"
+            class="w-full h-full object-cover"
+            muted
+            autoplay
+            loop
+            playsinline
+            preload="auto"
+          ></video>
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none"
+          ></div>
+
+          <div
+            class="absolute bottom-0 left-0 right-0 p-6 md:p-10 flex flex-col md:flex-row md:items-end md:justify-between gap-6 z-10"
+          >
+            <div class="liquid-glass rounded-2xl p-6 md:p-8 max-w-md">
+              <span
+                class="inline-block text-white/50 text-xs tracking-widest uppercase mb-3 font-mono"
+                >Our Approach</span
+              >
+              <p class="text-white text-sm md:text-base leading-relaxed">
+                We believe in the power of curiosity-driven exploration. Every
+                project starts with a question, and every answer opens a new
+                door to innovation.
+              </p>
             </div>
+
+            <button
+              class="liquid-glass rounded-full px-8 py-3 text-white text-sm font-medium self-start md:self-auto hover:bg-white/10 transition-all duration-300 transform hover:scale-105 active:scale-95"
+            >
+              Explore more
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+       SECTION 4 -- PHILOSOPHY
+       ========================================== -->
+    <section class="bg-black py-28 md:py-40 px-6 overflow-hidden">
+      <div class="max-w-6xl mx-auto">
+        <h2
+          class="reveal-item text-5xl md:text-7xl lg:text-8xl text-white tracking-tight mb-16 md:mb-24 font-instrument"
+        >
+          <span class="italic text-white/40">Innovation then x</span> Vision
+        </h2>
+
+        <div
+          class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center"
+        >
+          <!-- Left Column Video -->
+          <div
+            class="reveal-item-left rounded-3xl overflow-hidden aspect-[4/3] relative"
+          >
+            <video
+              src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260307_083826_e938b29f-a43a-41ec-a153-3d4730578ab8.mp4"
+              class="w-full h-full object-cover"
+              muted
+              autoplay
+              loop
+              playsinline
+              preload="auto"
+            ></video>
           </div>
 
-          <div class="sh-filter">
-            <div class="sh-filter__label">Khoảng giá</div>
-            <div class="sh-range">
-              <input id="minPrice" type="number" placeholder="Tối thiểu (đ)" inputmode="numeric" />
-            </div>
-            <div class="sh-range" style="margin-top:10px;">
-              <input id="maxPrice" type="number" placeholder="Tối đa (đ)" inputmode="numeric" />
-            </div>
-          </div>
-
-          <div class="sh-filter">
-            <div class="sh-filter__label">RAM</div>
-            <div class="sh-chips">
-              <label class="sh-chip"><input type="checkbox" value="4" name="ram" /> 4GB</label>
-              <label class="sh-chip"><input type="checkbox" value="6" name="ram" /> 6GB</label>
-              <label class="sh-chip"><input type="checkbox" value="8" name="ram" /> 8GB</label>
-              <label class="sh-chip"><input type="checkbox" value="12" name="ram" /> 12GB</label>
-            </div>
-          </div>
-
-          <div class="sh-filter">
-            <div class="sh-filter__label">Bộ nhớ</div>
-            <div class="sh-chips">
-              <label class="sh-chip"><input type="checkbox" value="128" name="storage" /> 128GB</label>
-              <label class="sh-chip"><input type="checkbox" value="256" name="storage" /> 256GB</label>
-              <label class="sh-chip"><input type="checkbox" value="512" name="storage" /> 512GB</label>
-            </div>
-          </div>
-
-          <button class="sh-btn sh-btn--primary sh-btn--full" id="applyFilters" type="button" style="margin-top:16px;">Áp dụng lọc</button>
-        </aside>
-
-        <!-- RIGHT GRID + WIDGETS -->
-        <div>
-          <div class="sh-toolbar" aria-label="Tùy chọn hiển thị">
-            <div style="font-weight:900;">Kết quả: <span id="resultCount">0</span> sản phẩm</div>
-            <div class="sh-select">
-              <label style="color:var(--muted); font-size:.85rem; margin-right:8px;">Sắp xếp</label>
-              <select id="sortSelect" aria-label="Sắp xếp">
-                <option value="best">Nổi bật</option>
-                <option value="priceAsc">Giá tăng dần</option>
-                <option value="priceDesc">Giá giảm dần</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="sh-product-layout">
+          <!-- Right Column Text -->
+          <div class="reveal-item-right flex flex-col gap-8 md:gap-10">
             <div>
-              <div class="sh-product-grid" id="productGrid" aria-label="Danh sách sản phẩm"></div>
+              <span
+                class="block text-white/40 text-xs tracking-widest uppercase mb-4 font-mono"
+                >Choose your space</span
+              >
+              <p class="text-white/70 text-base md:text-lg leading-relaxed">
+                Every meaningful breakthrough begins at the intersection of
+                disciplined strategy and remarkable creative vision. We operate
+                at that crossroads, turning bold thinking into tangible outcomes
+                that move people and reshape industries.
+              </p>
             </div>
 
-            <div style="display:none"></div>
-          </div>
+            <div class="w-full h-px bg-white/10"></div>
 
-          <!-- WIDGETS RIGHT (trên mobile sẽ xuống dưới tự nhiên) -->
-          <div class="sh-widgets">
-            <div class="sh-panel">
-              <div class="sh-panel__header">
-                <div style="font-weight:900; font-size:1.05rem;">Thu cũ đổi mới</div>
-                <button class="sh-link-btn" type="button">Xem bảng giá</button>
-              </div>
-              <div style="color:var(--muted); font-size:.9rem; line-height:1.6;">
-                Chỉ với vài bước nhanh chóng, bạn có thể nhận thêm ưu đãi khi nâng cấp thiết bị.
-              </div>
-              <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:14px;">
-                <button class="sh-btn sh-btn--primary" type="button">Ước tính ngay</button>
-                <button class="sh-btn sh-btn--ghost" type="button">Tư vấn thu cũ</button>
-              </div>
-            </div>
-
-            <div class="sh-panel">
-              <div class="sh-panel__header">
-                <div style="font-weight:900; font-size:1.05rem;">Trả góp online</div>
-              </div>
-              <form id="emiForm" class="sh-emi-form">
-                <div class="sh-field">
-                  <label class="sh-label" for="emiPrice">Giá sản phẩm (đ)</label>
-                  <input class="sh-input" id="emiPrice" type="number" placeholder="Ví dụ: 19900000" inputmode="numeric" />
-                </div>
-                <div class="sh-field">
-                  <label class="sh-label" for="emiMonths">Kỳ hạn (tháng)</label>
-                  <select class="sh-input" id="emiMonths">
-                    <option value="6">6 tháng</option>
-                    <option value="9">9 tháng</option>
-                    <option value="12" selected>12 tháng</option>
-                    <option value="18">18 tháng</option>
-                  </select>
-                </div>
-                <button class="sh-btn sh-btn--primary sh-btn--full" type="submit">Tính trả góp</button>
-              </form>
-              <div id="emiResult" class="sh-emi-result" aria-live="polite"></div>
-            </div>
-
-            <div class="sh-panel">
-              <div class="sh-panel__header">
-                <div style="font-weight:900; font-size:1.05rem;">So sánh thông số</div>
-                <button class="sh-link-btn" id="openCompare" type="button">Xem full</button>
-              </div>
-              <div class="sh-compare-mini">
-                <table>
-                  <thead>
-                    <tr>
-                      <th></th>
-                      <th>iPhone 15 Pro</th>
-                      <th>iPhone 15 Pro Max</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>Màn hình</td>
-                      <td>6.1" OLED</td>
-                      <td>6.7" OLED</td>
-                    </tr>
-                    <tr>
-                      <td>Chip</td>
-                      <td>A17 Pro</td>
-                      <td>A17 Pro</td>
-                    </tr>
-                    <tr>
-                      <td>RAM</td>
-                      <td>8GB</td>
-                      <td>8GB</td>
-                    </tr>
-                    <tr>
-                      <td>Camera</td>
-                      <td>3 lens</td>
-                      <td>3 lens</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+            <div>
+              <span
+                class="block text-white/40 text-xs tracking-widest uppercase mb-4 font-mono"
+                >Shape the future</span
+              >
+              <p class="text-white/70 text-base md:text-lg leading-relaxed">
+                We believe that the best work emerges when curiosity meets
+                conviction. Our process is designed to uncover hidden
+                opportunities and translate them into experiences that resonate
+                long after the first impression.
+              </p>
             </div>
           </div>
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
 
-    <!-- COMPARE MODAL -->
-    <div class="sh-modal" id="compareModal" role="dialog" aria-modal="true" aria-label="So sánh sản phẩm">
-      <div class="sh-modal__backdrop" data-close></div>
-      <div class="sh-modal__content">
-        <div class="sh-modal__header">
-          <div style="font-weight:900;">So sánh thông số sản phẩm</div>
-          <button class="sh-modal__close" type="button" data-close aria-label="Đóng">✕</button>
+    <!-- ==========================================
+       SECTION 5 -- SERVICES
+       ========================================== -->
+    <section class="bg-black py-28 md:py-40 px-6 overflow-hidden relative">
+      <div
+        class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(255,255,255,0.02)_0%,_transparent_60%)] pointer-events-none"
+      ></div>
+
+      <div class="max-w-6xl mx-auto relative z-10">
+        <!-- Header Row -->
+        <div class="reveal-item flex justify-between items-end mb-12 md:mb-16">
+          <h2 class="text-3xl md:text-5xl text-white tracking-tight">
+            What we do
+          </h2>
+          <span
+            class="text-white/40 text-sm hidden md:inline font-mono uppercase tracking-widest"
+            >Our services</span
+          >
         </div>
-        <div class="sh-compare">
-          <table>
-            <thead>
-              <tr>
-                <th>Thông số</th>
-                <th>iPhone 15 Pro</th>
-                <th>iPhone 15 Pro Max</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><td>Màn hình</td><td>6.1" OLED</td><td>6.7" OLED</td></tr>
-              <tr><td>Chip</td><td>A17 Pro</td><td>A17 Pro</td></tr>
-              <tr><td>RAM</td><td>8GB</td><td>8GB</td></tr>
-              <tr><td>Bộ nhớ</td><td>128/256/512GB</td><td>256/512GB</td></tr>
-              <tr><td>Camera</td><td>3 lens</td><td>3 lens</td></tr>
-              <tr><td>Pin</td><td>~20 giờ</td><td>~29 giờ</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="sh-modal__footer">
-          <div style="color:var(--muted);">* Bảng thông số minh hoạ</div>
-          <button class="sh-btn sh-btn--primary" type="button" data-close>Đã hiểu</button>
+
+        <!-- Grid Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+          <!-- Card 1 -->
+          <div
+            class="reveal-item liquid-glass rounded-3xl overflow-hidden group flex flex-col justify-between"
+          >
+            <div class="aspect-video overflow-hidden relative">
+              <video
+                src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260314_131748_f2ca2a28-fed7-44c8-b9a9-bd9acdd5ec31.mp4"
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                muted
+                autoplay
+                loop
+                playsinline
+                preload="auto"
+              ></video>
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"
+              ></div>
+            </div>
+
+            <div class="p-6 md:p-8 flex flex-col justify-between flex-1">
+              <div class="flex justify-between items-center mb-6">
+                <span
+                  class="uppercase tracking-widest text-white/40 text-xs font-mono"
+                  >Strategy</span
+                >
+                <div
+                  class="liquid-glass rounded-full p-2 text-white hover:bg-white/10 transition-colors duration-300"
+                >
+                  <!-- Arrow Up Right Icon -->
+                  <svg
+                    class="w-5 h-5"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M7 17 17 7" />
+                    <path d="M7 7h10v10" />
+                  </svg>
+                </div>
+              </div>
+              <div>
+                <h3
+                  class="text-white text-xl md:text-2xl mb-3 tracking-tight font-medium"
+                >
+                  Research & Insight
+                </h3>
+                <p class="text-white/50 text-sm leading-relaxed">
+                  We dig deep into data, culture, and human behavior to surface
+                  the insights that drive meaningful, lasting change.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div
+            class="reveal-item liquid-glass rounded-3xl overflow-hidden group flex flex-col justify-between"
+          >
+            <div class="aspect-video overflow-hidden relative">
+              <video
+                src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260324_151826_c7218672-6e92-402c-9e45-f1e0f454bdc4.mp4"
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                muted
+                autoplay
+                loop
+                playsinline
+                preload="auto"
+              ></video>
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"
+              ></div>
+            </div>
+
+            <div class="p-6 md:p-8 flex flex-col justify-between flex-1">
+              <div class="flex justify-between items-center mb-6">
+                <span
+                  class="uppercase tracking-widest text-white/40 text-xs font-mono"
+                  >Craft</span
+                >
+                <div
+                  class="liquid-glass rounded-full p-2 text-white hover:bg-white/10 transition-colors duration-300"
+                >
+                  <!-- Arrow Up Right Icon -->
+                  <svg
+                    class="w-5 h-5"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M7 17 17 7" />
+                    <path d="M7 7h10v10" />
+                  </svg>
+                </div>
+              </div>
+              <div>
+                <h3
+                  class="text-white text-xl md:text-2xl mb-3 tracking-tight font-medium"
+                >
+                  Design & Execution
+                </h3>
+                <p class="text-white/50 text-sm leading-relaxed">
+                  From concept to launch, we obsess over every detail to deliver
+                  experiences that feel effortless and look extraordinary.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </main>
+    </section>
 
-  <!-- FOOTER -->
-  <footer class="sh-footer" aria-label="Chân trang">
-    <div class="container">
-      <div class="sh-footer__grid">
-        <div>
-          <div class="sh-footer__title">Giới thiệu</div>
-          <span class="sh-footer__text">SmartHub là cửa hàng công nghệ hướng đến trải nghiệm mua sắm nhanh chóng.</span>
-          <span class="sh-footer__text">Luôn cập nhật sản phẩm mới nhất.</span>
-        </div>
-        <div>
-          <div class="sh-footer__title">Chính sách bảo hành</div>
-          <a class="sh-footer__link" href="#">Bảo hành chính hãng</a>
-          <a class="sh-footer__link" href="#">Quy trình tiếp nhận nhanh</a>
-          <a class="sh-footer__link" href="#">Hỗ trợ kiểm tra trạng thái</a>
-        </div>
-        <div>
-          <div class="sh-footer__title">Đổi trả</div>
-          <a class="sh-footer__link" href="#">Điều kiện đổi trả</a>
-          <a class="sh-footer__link" href="#">Hoàn tiền linh hoạt</a>
-          <a class="sh-footer__link" href="#">Hướng dẫn thủ tục</a>
-        </div>
-        <div>
-          <div class="sh-footer__title">Liên hệ</div>
-          <a class="sh-footer__link" href="#">Fanpage</a>
-          <a class="sh-footer__link" href="#">Hotline: 1900 1234</a>
-          <span class="sh-footer__text">Email: support@smarthub.vn</span>
-        </div>
-      </div>
-      <div class="sh-footer__bottom">
-        © <span id="year"></span> SmartHub. All rights reserved.
-      </div>
-    </div>
-  </footer>
-
-  <script src="../JS/script.js"></script>
-</body>
+    <!-- Liên kết file JS riêng biệt -->
+    <script src="../JS/index_scrip.js"></script>
+  </body>
 </html>
-
-
