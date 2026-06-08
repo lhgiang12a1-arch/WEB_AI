@@ -2,16 +2,18 @@
 
 /* Hiệu ứng kính Liquid Glass */
 .liquid-glass {
-  background: rgba(255, 255, 255, 0.01);
-  background-blend-mode: luminosity;
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  border: none;
-  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  background: rgba(15, 15, 15, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.1),
+    0 0 0 rgba(0, 0, 0, 0);
   position: relative;
   overflow: hidden;
 }
 
+/* Viền gradient cho các card kính nói chung */
 .liquid-glass::before {
   content: "";
   position: absolute;
@@ -33,6 +35,39 @@
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   pointer-events: none;
+}
+
+/* FEATURES: viền sáng rõ hơn (gradient stroke nhẹ) */
+#features .feature-card {
+  overflow: hidden; /* đảm bảo border-radius khớp */
+}
+
+#features .feature-card::before {
+  padding: 2px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.35) 0%,
+    rgba(255, 255, 255, 0.12) 35%,
+    rgba(255, 255, 255, 0.05) 55%,
+    rgba(255, 255, 255, 0.28) 100%
+  );
+  opacity: 0.95;
+}
+
+#features .feature-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  /* điểm nhấn viền mảnh ở giữa */
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.08) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  mix-blend-mode: screen;
 }
 
 /* Các lớp hiệu ứng trượt xuất hiện khi cuộn trang (Scroll Reveal) */
@@ -64,4 +99,47 @@
 .reveal-item-right.revealed {
   opacity: 1;
   transform: translateX(0);
+}
+
+/* Pricing UI tweaks */
+#pricing [aria-label="pricing-card-pro"],
+#pricing .pricing-card-pro {
+  overflow: visible;
+}
+
+/* Nhãn “Most popular” đè lên viền top card Pro (không làm lệch form) */
+#pricing .pricing-pro-badge {
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Buttons chuẩn hoá */
+#pricing .pricing-outline-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+#pricing .pricing-outline-btn:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+#pricing .pricing-pro-btn {
+  background: #ffffff;
+  color: #000000;
+  border-radius: 22px;
+}
+
+/* FAQ Accordion */
+.faq-trigger {
+  cursor: pointer;
+}
+
+.faq-icon {
+  transition: transform 200ms ease;
+}
+
+.faq-item-open .faq-icon {
+  transform: rotate(45deg);
 }
