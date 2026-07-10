@@ -4,10 +4,15 @@
 @import url("./Flames App_files/index-Di1167Ii.css");
 
 /* Minimal overrides to ensure background and text color match original */
-html, body {
+html,
+body {
   background: #121212;
   color: #ffffff;
 }
 
 /* Small helper: reduce verbose inline blur box-sizing issues */
-*, *::before, *::after { box-sizing: border-box; }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
