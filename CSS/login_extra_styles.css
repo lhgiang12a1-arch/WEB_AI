@@ -1,9 +1,0 @@
-/* Login - style bổ sung (tuỳ chọn) */
-
-/* Tạo cảm giác “liquid glass” mịn hơn cho form login */
-#login-form .liquid-glass,
-.login-input,
-.login-primary-btn {
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-}
