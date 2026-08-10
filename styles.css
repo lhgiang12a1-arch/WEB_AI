@@ -1,18 +1,75 @@
-/* Consolidated stylesheet for Flames App (minimal loader)
-   This file imports the existing compiled CSS from the extracted assets folder.
-*/
-@import url("./Flames App_files/index-Di1167Ii.css");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-/* Minimal overrides to ensure background and text color match original */
-html,
-body {
-  background: #121212;
-  color: #ffffff;
+/* Custom Sci-Fi UI Styles */
+.glow-text {
+    text-shadow: 0 0 10px rgba(255, 170, 85, 0.4),
+                 0 0 20px rgba(255, 170, 85, 0.2),
+                 0 0 40px rgba(255, 170, 85, 0.1);
 }
 
-/* Small helper: reduce verbose inline blur box-sizing issues */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
+button {
+    color: rgba(255, 170, 85, 0.5);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 6px 10px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    background: transparent;
+    outline: none;
+}
+
+button:hover {
+    color: rgba(255, 170, 85, 0.9);
+    text-shadow: 0 0 8px rgba(255, 170, 85, 0.6);
+}
+
+button.active {
+    color: #ffaa55;
+    border: 1px solid rgba(255, 170, 85, 0.4);
+    background: rgba(255, 170, 85, 0.15);
+    text-shadow: 0 0 12px rgba(255, 170, 85, 0.8);
+    box-shadow: inset 0 0 10px rgba(255, 170, 85, 0.2);
+}
+
+/* Subtle CRT scanline effect */
+body::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+        to bottom,
+        rgba(255,255,255,0),
+        rgba(255,255,255,0) 50%,
+        rgba(0,0,0,0.2) 50%,
+        rgba(0,0,0,0.2)
+    );
+    background-size: 100% 4px;
+    z-index: 20;
+    opacity: 0.4;
+}
+
+/* Vignette */
+body::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(circle at center, transparent 40%, rgba(0,0,0,0.8) 100%);
+    z-index: 15;
+}
+
+/* Animations for UI elements */
+@keyframes flicker {
+    0% { opacity: 0.9; }
+    5% { opacity: 0.5; }
+    10% { opacity: 0.95; }
+    15% { opacity: 0.7; }
+    20% { opacity: 1.0; }
+    100% { opacity: 1.0; }
+}
+
+.flicker-in {
+    animation: flicker 1s ease-out forwards;
 }

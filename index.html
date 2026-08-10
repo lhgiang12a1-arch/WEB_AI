@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GARGANTUA | Supermassive Black Hole</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="bg-black text-[#ffaa55] overflow-hidden select-none font-['Inter'] antialiased">
+    <!-- WebGL Canvas Container -->
+    <div id="canvas-container" class="absolute inset-0 z-0"></div>
+
+    <!-- UI Overlay -->
+    <div id="ui-layer"
+        class="absolute inset-0 z-10 pointer-events-none flex flex-col justify-between p-6 transition-opacity duration-500">
+        <!-- Header -->
+        <header class="flex justify-between items-start">
+            <div class="glow-text">
+                <h1 class="text-4xl md:text-6xl font-bold tracking-[0.2em] uppercase">Gargantua</h1>
+                <p class="text-xs md:text-sm tracking-[0.1em] opacity-80 mt-2 font-['JetBrains_Mono']">
+                    SUPERMASSIVE BLACK HOLE · 1.0 × 10⁸ M☉<br>
+                    SCHWARZSCHILD METRIC // NULL-GEODESIC RAYTRACING
+                </p>
+            </div>
+            <div
+                class="font-['JetBrains_Mono'] text-sm tracking-widest opacity-90 glow-text text-right hidden sm:block">
+                MISSION ELAPSED<br>
+                <span id="timer">00:00:28</span>
+            </div>
+        </header>
+
+        <!-- Bottom Section -->
+        <div class="flex flex-col sm:flex-row justify-between items-end w-full gap-4">
+            <!-- Telemetry / Specs -->
+            <div class="font-['JetBrains_Mono'] text-xs md:text-sm flex flex-col gap-2 opacity-80 glow-text"
+                id="params-panel">
+                <div>OBSERVER DISTANCE: <span id="stat-dist">30.68</span> RS</div>
+                <div>DISK INCLINATION: <span id="stat-incl">14.3</span>°</div>
+                <div>GEODESIC STEPS: <span id="stat-steps">460</span></div>
+                <div>RENDER PROFILE: <span id="stat-profile">CINEMATIC</span></div>
+                <div>FRAME RATE: <span id="stat-fps">60</span> FPS</div>
+            </div>
+
+            <!-- Controls (Pointer events enabled for interaction) -->
+            <div class="pointer-events-auto flex flex-col items-end gap-6">
+                <!-- Camera Modes -->
+                <div class="flex gap-2 text-xs font-['JetBrains_Mono'] flex-wrap justify-end max-w-sm">
+                    <button class="cam-btn active" data-mode="poster">[POSTER]</button>
+                    <button class="cam-btn" data-mode="edge">[EDGE]</button>
+                    <button class="cam-btn" data-mode="polar">[POLAR]</button>
+                    <button class="cam-btn" data-mode="close">[CLOSE]</button>
+                </div>
+                <!-- Toggles -->
+                <div class="flex gap-2 text-xs font-['JetBrains_Mono'] flex-wrap justify-end max-w-sm">
+                    <button class="toggle-btn active" data-toggle="auto">[AUTO]</button>
+                    <button class="toggle-btn active" data-toggle="cine">[CINEMATIC]</button>
+                    <button class="toggle-btn active" data-toggle="params">[PARAMS]</button>
+                    <button class="toggle-btn active" data-toggle="hud">[HUD]</button>
+                    <button class="toggle-btn" data-toggle="sound">[SOUND: OFF]</button>
+                </div>
+                <!-- Shortcuts -->
+                <div
+                    class="text-[10px] opacity-50 tracking-widest text-right mt-2 font-['JetBrains_Mono'] hidden sm:block">
+                    1-4 VIEWS · C CINE · R ORBIT · P PARAMS · M SOUND · H HUD
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Import Maps for Three.js -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+    <!-- Main Application Logic -->
+    <script type="module" src="main.js"></script>
+</body>
+
+</html>
