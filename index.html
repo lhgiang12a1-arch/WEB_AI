@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Double Glowing Heart & Custom Text</title>
+    <title>Double Glowing Heart & Custom Text (Optimized Fix)</title>
     <style>
       body {
         margin: 0;
@@ -19,7 +19,6 @@
         display: block;
       }
 
-      /* CSS cho khung nhập tên */
       .input-container {
         position: absolute;
         bottom: 40px;
@@ -87,10 +86,7 @@
       let isExploded = false;
       let explosionTimeout;
 
-      let floatParticles = [];
-      let burstParticles = [];
-      let outerBurstParticles = [];
-      let textParticles = [];
+      let allParticles = [];
 
       const FLOAT_COUNT = 150;
       const BURST_COUNT = 1500;
@@ -114,6 +110,15 @@
             this.offsetX = (Math.random() - 0.5) * 15;
             this.offsetY = (Math.random() - 0.5) * 15;
             this.size = Math.random() * 1.5 + 1.5;
+
+            // Tính sẵn tọa độ trái tim để giảm tải cho lúc render
+            this.hx = 16 * Math.pow(Math.sin(this.t), 3);
+            this.hy = -(
+              13 * Math.cos(this.t) -
+              5 * Math.cos(2 * this.t) -
+              2 * Math.cos(3 * this.t) -
+              Math.cos(4 * this.t)
+            );
           } else if (type === "float") {
             this.vx = (Math.random() - 0.5) * 0.8;
             this.vy = Math.random() * -1 - 0.5;
@@ -126,13 +131,10 @@
         }
 
         explode(mouseX, mouseY) {
-          if (
-            this.type === "burst" ||
-            this.type === "outer_burst" ||
-            this.type === "text"
-          ) {
+          if (this.type !== "float") {
             const dx = this.x - mouseX;
             const dy = this.y - mouseY;
+            // Khôi phục lại công thức tính khoảng cách chuẩn để cảm giác nổ chân thực nhất
             const distance = Math.sqrt(dx * dx + dy * dy) || 1;
 
             const force = Math.min(3000 / distance, 50);
@@ -144,11 +146,7 @@
         }
 
         update(time, beatScale, dynamicHeartScale) {
-          if (
-            this.type === "burst" ||
-            this.type === "outer_burst" ||
-            this.type === "text"
-          ) {
+          if (this.type !== "float") {
             if (isExploded) {
               this.vx *= 0.96;
               this.vy *= 0.96;
@@ -158,21 +156,13 @@
               let targetX, targetY;
 
               if (this.type === "burst" || this.type === "outer_burst") {
-                const hx = 16 * Math.pow(Math.sin(this.t), 3);
-                const hy = -(
-                  13 * Math.cos(this.t) -
-                  5 * Math.cos(2 * this.t) -
-                  2 * Math.cos(3 * this.t) -
-                  Math.cos(4 * this.t)
-                );
-
                 const finalScale =
                   this.type === "outer_burst"
                     ? dynamicHeartScale * 1.25
                     : dynamicHeartScale;
-
-                targetX = width / 2 + hx * finalScale + this.offsetX;
-                targetY = height / 2 + (hy - 2.5) * finalScale + this.offsetY;
+                targetX = width / 2 + this.hx * finalScale + this.offsetX;
+                targetY =
+                  height / 2 + (this.hy - 2.5) * finalScale + this.offsetY;
               } else {
                 targetX = width / 2 + this.baseX * beatScale;
                 targetY = height / 2 + this.baseY * beatScale;
@@ -190,7 +180,7 @@
               this.x += this.vx;
               this.y += this.vy;
             }
-          } else if (this.type === "float") {
+          } else {
             this.x += this.vx;
             this.y += this.vy;
             this.x += Math.sin(time * 2 + this.y * 0.01) * 0.5;
@@ -205,26 +195,24 @@
         }
 
         draw(ctx) {
-          ctx.beginPath();
-          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
           ctx.fillStyle = this.color;
-          ctx.shadowBlur =
-            this.type === "burst" ||
-            this.type === "outer_burst" ||
-            this.type === "text"
-              ? 15
-              : 8;
-          ctx.shadowColor = this.color;
-          ctx.fill();
-          ctx.shadowBlur = 0;
+
+          if (this.type !== "float") {
+            // Hiệu ứng mờ giả lập shadowBlur (chạy rất nhẹ cho điện thoại)
+            ctx.globalAlpha = 0.3;
+            ctx.fillRect(this.x - 1, this.y - 1, this.size + 2, this.size + 2);
+          }
+
+          ctx.globalAlpha = 1.0;
+          ctx.fillRect(this.x, this.y, this.size, this.size);
         }
       }
 
       function initTextParticles(text) {
-        textParticles = [];
-        ctx.clearRect(0, 0, width, height);
+        // Chỉ xóa hạt chữ cũ đi, giữ lại trái tim
+        allParticles = allParticles.filter((p) => p.type !== "text");
 
-        // Tránh lỗi khi xóa hết chữ trong ô input
+        ctx.clearRect(0, 0, width, height);
         const displayText = text.trim() === "" ? " " : text;
 
         const fontSize = Math.min(width * 0.08, 60);
@@ -244,7 +232,8 @@
         const imageData = ctx.getImageData(0, 0, width, height);
         const data = imageData.data;
 
-        const step = 4;
+        // Quét tạo điểm chữ, step = 5 để nhẹ máy
+        const step = 5;
         for (let y = 0; y < height; y += step) {
           for (let x = 0; x < width; x += step) {
             const index = (y * width + x) * 4;
@@ -253,7 +242,7 @@
             if (alpha > 128) {
               const baseX = x - width / 2;
               const baseY = y - height / 2;
-              textParticles.push(new Particle("text", baseX, baseY));
+              allParticles.push(new Particle("text", baseX, baseY));
             }
           }
         }
@@ -261,34 +250,38 @@
       }
 
       function initParticles() {
-        floatParticles = [];
-        burstParticles = [];
-        outerBurstParticles = [];
-
+        allParticles = [];
         for (let i = 0; i < FLOAT_COUNT; i++)
-          floatParticles.push(new Particle("float"));
+          allParticles.push(new Particle("float"));
         for (let i = 0; i < BURST_COUNT; i++)
-          burstParticles.push(new Particle("burst"));
+          allParticles.push(new Particle("burst"));
         for (let i = 0; i < OUTER_BURST_COUNT; i++)
-          outerBurstParticles.push(new Particle("outer_burst"));
+          allParticles.push(new Particle("outer_burst"));
       }
 
-      function resize() {
-        width = canvas.width = window.innerWidth;
-        height = canvas.height = window.innerHeight;
-        initTextParticles(currentText);
-      }
+      // THỨ TỰ CHUẨN ĐỂ KHÔNG BỊ LỖI MẤT TRÁI TIM:
+      // 1. Lấy kích thước màn hình
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
 
-      // Xử lý sự kiện khi gõ chữ vào ô input
+      // 2. Khởi tạo trái tim (lúc này width/height đã có giá trị thực)
+      initParticles();
+
+      // 3. Khởi tạo chữ
+      initTextParticles(currentText);
+
+      // Xử lý khi thay đổi tên trong khung
       nameInput.addEventListener("input", (e) => {
         currentText = e.target.value;
         initTextParticles(currentText);
       });
 
-      window.addEventListener("resize", resize);
-
-      resize();
-      initParticles();
+      // Chỉ thay đổi lại chữ và vị trí khi xoay màn hình/đổi kích thước web
+      window.addEventListener("resize", () => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+        initTextParticles(currentText);
+      });
 
       canvas.addEventListener("click", (e) => {
         clearTimeout(explosionTimeout);
@@ -298,9 +291,7 @@
         const mouseX = e.clientX - rect.left;
         const mouseY = e.clientY - rect.top;
 
-        burstParticles.forEach((p) => p.explode(mouseX, mouseY));
-        outerBurstParticles.forEach((p) => p.explode(mouseX, mouseY));
-        textParticles.forEach((p) => p.explode(mouseX, mouseY));
+        allParticles.forEach((p) => p.explode(mouseX, mouseY));
 
         explosionTimeout = setTimeout(() => {
           isExploded = false;
@@ -312,9 +303,9 @@
         ctx.fillRect(0, 0, width, height);
 
         const time = Date.now() * 0.001;
-
         const cycle = (time * 1000) % 1500;
         let beatScale = 1;
+
         if (cycle < 200) {
           beatScale = 1 + Math.sin((cycle / 200) * Math.PI) * 0.08;
         } else if (cycle > 300 && cycle < 500) {
@@ -323,25 +314,12 @@
 
         const dynamicHeartScale = baseHeartScale * beatScale;
 
-        floatParticles.forEach((p) => {
-          p.update(time, 1, 1);
-          p.draw(ctx);
-        });
-
-        textParticles.forEach((p) => {
+        // Vẽ tất cả bằng 1 vòng lặp duy nhất
+        for (let i = 0; i < allParticles.length; i++) {
+          const p = allParticles[i];
           p.update(time, beatScale, dynamicHeartScale);
           p.draw(ctx);
-        });
-
-        burstParticles.forEach((p) => {
-          p.update(time, beatScale, dynamicHeartScale);
-          p.draw(ctx);
-        });
-
-        outerBurstParticles.forEach((p) => {
-          p.update(time, beatScale, dynamicHeartScale);
-          p.draw(ctx);
-        });
+        }
 
         requestAnimationFrame(animate);
       }
