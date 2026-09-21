@@ -1,345 +1,459 @@
-import * as THREE from 'three';
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+'use strict';
 
-// ---- SCENE SETUP ----
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
-renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-document.getElementById('canvas-container').appendChild(renderer.domElement);
+/**
+ * Mara Li portfolio index
+ * Static-first HTML enhancement with a local fallback and an optional API seam.
+ */
 
-// ---- CONTROLS ----
-const controls = new OrbitControls(camera, renderer.domElement);
-controls.enableDamping = true;
-controls.dampingFactor = 0.05;
-controls.enablePan = false;
-controls.minDistance = 3.0;
-controls.maxDistance = 60.0;
+const API_ENDPOINT = '';
+const API_KEY = '';
 
-// Initial position (POSTER mode)
-camera.position.set(0, 7.6, 29.7);
-controls.update();
-
-// ---- SHADER MATERIAL ----
-const vertexShader = `
-varying vec2 vUv;
-void main() {
-    vUv = uv;
-    gl_Position = vec4(position, 1.0);
-}
-`;
-
-const fragmentShader = `
-varying vec2 vUv;
-uniform vec2 u_resolution;
-uniform float u_time;
-uniform vec3 u_cameraPos;
-uniform vec3 u_cameraDir;
-uniform vec3 u_cameraUp;
-uniform vec3 u_cameraRight;
-uniform float u_fov;
-
-// Hash and Noise functions for procedural generation
-float hash(vec3 p) {
-    p  = fract( p*0.3183099+.1 );
-    p *= 17.0;
-    return fract( p.x*p.y*p.z*(p.x+p.y+p.z) );
-}
-
-float noise(vec3 x) {
-    vec3 i = floor(x);
-    vec3 f = fract(x);
-    f = f*f*(3.0-2.0*f);
-    return mix(mix(mix( hash(i+vec3(0,0,0)), hash(i+vec3(1,0,0)),f.x),
-                   mix( hash(i+vec3(0,1,0)), hash(i+vec3(1,1,0)),f.x),f.y),
-               mix(mix( hash(i+vec3(0,0,1)), hash(i+vec3(1,0,1)),f.x),
-                   mix( hash(i+vec3(0,1,1)), hash(i+vec3(1,1,1)),f.x),f.y),f.z);
-}
-
-float fbm(vec3 p) {
-    float f = 0.0;
-    float w = 0.5;
-    for (int i = 0; i < 4; i++) {
-        f += w * noise(p);
-        p *= 2.1;
-        w *= 0.5;
+const portfolio = {
+  profile: {
+    name: 'Mara Li',
+    role: 'Independent product designer',
+    location: 'Glasgow',
+    availability: 'Available from September',
+    independentSince: '2018',
+    email: 'mara@domain.com'
+  },
+  projects: [
+    {
+      id: 'cedar',
+      title: 'Cedar',
+      sector: 'Regional rail ticketing tools',
+      year: '2024',
+      outcome: 'A clearer route through complex journeys and timetable decisions.',
+      role: 'Product direction, interaction design'
+    },
+    {
+      id: 'northline',
+      title: 'Northline',
+      sector: 'Insurance claims workspace',
+      year: '2023',
+      outcome: 'A calmer workspace for claims teams moving from intake to resolution.',
+      role: 'Research synthesis, systems design'
+    },
+    {
+      id: 'common-ground',
+      title: 'Common Ground',
+      sector: 'Public-library membership service',
+      year: '2022',
+      outcome: 'A more legible membership journey for visitors and library teams.',
+      role: 'Service design, prototyping'
     }
-    return f;
-}
-
-void main() {
-    // Normalized screen coordinates
-    vec2 uv = (vUv - 0.5) * 2.0;
-    uv.x *= u_resolution.x / u_resolution.y;
-
-    // Ray generation
-    float fov = tan(radians(u_fov) / 2.0);
-    vec3 ro = u_cameraPos;
-    vec3 rd = normalize(u_cameraDir + uv.x * fov * u_cameraRight + uv.y * fov * u_cameraUp);
-
-    // Black Hole Parameters
-    const float RS = 1.0; // Schwarzschild radius
-    const int MAX_STEPS = 400; // Geodesic steps
-    
-    vec3 p = ro;
-    vec3 v = rd;
-    float dt = 0.05;
-    
-    vec3 col = vec3(0.0);
-    float alpha = 1.0;
-    
-    for(int i = 0; i < MAX_STEPS; i++) {
-        float r2 = dot(p, p);
-        float r = sqrt(r2);
-        
-        // Event Horizon boundary
-        if (r < RS * 1.02) {
-            break;
-        }
-        
-        // Escape boundary (Background Stars)
-        if (r > 60.0) {
-            float st = pow(fbm(v * 40.0), 6.0) * 1.5;
-            // Milky way band effect based on y-coordinate
-            float band = smoothstep(0.4, 0.0, abs(v.y));
-            vec3 starCol = mix(vec3(1.0, 0.8, 0.6), vec3(0.5, 0.7, 1.0), noise(v * 10.0));
-            col += starCol * st * (1.0 + band * 2.0) * alpha;
-            break;
-        }
-        
-        // Accretion Disk (Thin disk on XZ plane, y=0)
-        float dToPlane = abs(p.y);
-        if (dToPlane < 0.15 && r > 2.5 && r < 14.0) {
-            // Disk structure
-            float density = smoothstep(0.15, 0.0, dToPlane);
-            density *= smoothstep(2.5, 3.5, r) * smoothstep(14.0, 10.0, r);
-            
-            // Procedural noise / Swirl
-            float angle = atan(p.z, p.x);
-            float swirl = angle - u_time * (2.0 / sqrt(r)); // Keplerian velocity approximation
-            float n = fbm(vec3(r * 2.0, swirl * 4.0, 0.0));
-            density *= (n * 0.8 + 0.2);
-            
-            // Temperature Gradient (Hotter near center)
-            vec3 hot = vec3(1.0, 0.95, 0.8);
-            vec3 cold = vec3(0.85, 0.4, 0.1);
-            vec3 diskCol = mix(cold, hot, smoothstep(14.0, 2.5, r));
-            
-            // Relativistic Doppler Beaming
-            vec3 diskVel = normalize(vec3(-p.z, 0.0, p.x)); // Counter-clockwise rotation
-            float doppler = 1.0 + dot(v, diskVel) * 0.5; // Relativistic redshift/blueshift
-            doppler = pow(doppler, 4.0); // Boost effect
-            
-            // Emission
-            vec3 emission = diskCol * density * doppler * 8.0 * dt;
-            
-            col += emission * alpha;
-            alpha *= (1.0 - density * 2.0 * dt); // Absorption
-            
-            if (alpha < 0.01) break;
-        }
-        
-        // Gravitational Lensing (Null Geodesic Equation in Cartesian)
-        // a = -1.5 * RS * |L|^2 / r^5 * r_vec
-        vec3 L = cross(p, v);
-        vec3 accel = -1.5 * RS * dot(L, L) * p / (r2 * r2 * r);
-        
-        v = normalize(v + accel * dt);
-        p += v * dt;
-        
-        // Adaptive step size (slow down near the accretion disk plane to avoid skipping)
-        dt = min(max(0.01, r * 0.02), dToPlane * 0.5 + 0.01);
-    }
-    
-    // ACES Film Tone Mapping
-    col = col * 0.6; // Exposure
-    col = (col * (2.51 * col + 0.03)) / (col * (2.43 * col + 0.59) + 0.14);
-    
-    // Gamma correction
-    col = pow(col, vec3(1.0 / 2.2));
-    
-    gl_FragColor = vec4(col, 1.0);
-}
-`;
-
-const uniforms = {
-    u_time: { value: 0.0 },
-    u_resolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
-    u_cameraPos: { value: new THREE.Vector3() },
-    u_cameraDir: { value: new THREE.Vector3() },
-    u_cameraUp: { value: new THREE.Vector3() },
-    u_cameraRight: { value: new THREE.Vector3() },
-    u_fov: { value: camera.fov }
+  ],
+  notes: [
+    { id: 'queue', title: 'What a queue tells you', date: '04.24' },
+    { id: 'handover', title: 'Designing for the handover', date: '11.23' }
+  ]
 };
 
-const planeGeo = new THREE.PlaneGeometry(2, 2);
-const blackHoleMat = new THREE.ShaderMaterial({
-    uniforms: uniforms,
-    vertexShader: vertexShader,
-    fragmentShader: fragmentShader,
-    depthWrite: false,
-    depthTest: false
-});
+const sources = [
+  { id: 'project-cedar-role', number: '01', title: 'Cedar', field: 'role' },
+  { id: 'project-cedar-outcome', number: '01', title: 'Cedar', field: 'outcome' },
+  { id: 'project-northline-role', number: '02', title: 'Northline', field: 'role' },
+  { id: 'project-northline-outcome', number: '02', title: 'Northline', field: 'outcome' },
+  { id: 'project-common-ground-role', number: '03', title: 'Common Ground', field: 'role' },
+  { id: 'project-common-ground-outcome', number: '03', title: 'Common Ground', field: 'outcome' },
+  { id: 'profile-statement', number: 'Profile', title: 'Profile', field: 'practice' },
+  { id: 'profile-location', number: 'Profile', title: 'Profile', field: 'location' },
+  { id: 'profile-availability', number: 'Profile', title: 'Profile', field: 'availability' },
+  { id: 'profile-independent', number: 'Profile', title: 'Profile', field: 'experience' },
+  { id: 'profile-services', number: 'Profile', title: 'Profile', field: 'services' },
+  { id: 'profile-contact', number: 'Profile', title: 'Profile', field: 'contact' },
+  { id: 'note-queue', number: 'Note', title: 'What a queue tells you', field: 'note' },
+  { id: 'note-handover', number: 'Note', title: 'Designing for the handover', field: 'note' }
+];
 
-const quad = new THREE.Mesh(planeGeo, blackHoleMat);
-const postScene = new THREE.Scene();
-const postCamera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
-postScene.add(quad);
+const sourceById = new Map(sources.map((source) => [source.id, source]));
+const appState = {
+  theme: 'light',
+  chatOpen: false,
+  isLoading: false,
+  hasAsked: false,
+  highlightedSourceId: null,
+  lastFocusedElement: null,
+  closeTimer: null
+};
 
-// ---- UI LOGIC & EVENTS ----
+const root = document.documentElement;
+const chat = document.getElementById('portfolio-chat');
+const chatScrim = document.getElementById('chat-scrim');
+const chatBody = document.getElementById('chat-body');
+const chatForm = document.getElementById('chat-form');
+const chatInput = document.getElementById('chat-input');
+const chatTranscript = document.getElementById('chat-transcript');
+const chatPrompts = document.getElementById('chat-prompts');
+const chatStatus = document.getElementById('chat-status');
 
-// Resize
-window.addEventListener('resize', () => {
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    uniforms.u_resolution.value.set(window.innerWidth, window.innerHeight);
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-});
+function getStoredTheme() {
+  try {
+    const storedTheme = window.localStorage.getItem('mara-theme');
+    if (storedTheme === 'light' || storedTheme === 'dark') return storedTheme;
+  } catch (error) {
+    // Private browsing can block localStorage; system preference remains available.
+  }
 
-// UI Elements
-const statDist = document.getElementById('stat-dist');
-const statIncl = document.getElementById('stat-incl');
-const statFps = document.getElementById('stat-fps');
-const timerEl = document.getElementById('timer');
-const uiLayer = document.getElementById('ui-layer');
-
-let isHUDVisible = true;
-let isCinematic = true;
-let autoOrbit = true;
-
-// Camera Mode Buttons
-document.querySelectorAll('.cam-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-        document.querySelectorAll('.cam-btn').forEach(b => b.classList.remove('active'));
-        e.target.classList.add('active');
-
-        const mode = e.target.dataset.mode;
-        if (mode === 'poster') camera.position.set(0, 7.6, 29.7);
-        if (mode === 'edge') camera.position.set(0, 0.5, 25.0);
-        if (mode === 'polar') camera.position.set(0, 20.0, 0.1);
-        if (mode === 'close') camera.position.set(0, 1.5, 6.0);
-
-        controls.update();
-    });
-});
-
-// Toggle Buttons
-document.querySelectorAll('.toggle-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-        const t = e.target.dataset.toggle;
-
-        if (t === 'hud') {
-            isHUDVisible = !isHUDVisible;
-            // Hide everything except the HUD button itself? 
-            // Or just fade out the main UI but keep a tiny button to restore.
-            // For simplicity, we toggle opacity on the parent, but wait, the button is inside.
-            // Let's just toggle visibility of params-panel and headers.
-            document.querySelector('header').style.opacity = isHUDVisible ? '1' : '0';
-            document.getElementById('params-panel').style.opacity = isHUDVisible ? '1' : '0';
-            e.target.classList.toggle('active');
-        }
-
-        if (t === 'auto') {
-            autoOrbit = !autoOrbit;
-            e.target.classList.toggle('active');
-        }
-
-        if (t === 'cine') {
-            isCinematic = !isCinematic;
-            e.target.classList.toggle('active');
-            // Mock changing render profile
-            document.getElementById('stat-profile').textContent = isCinematic ? 'CINEMATIC' : 'PERFORMANCE';
-            // In a real app we might reduce MAX_STEPS here via uniform
-        }
-
-        if (t === 'sound') {
-            const isActive = e.target.classList.contains('active');
-            if (isActive) {
-                e.target.classList.remove('active');
-                e.target.textContent = '[SOUND: OFF]';
-            } else {
-                e.target.classList.add('active');
-                e.target.textContent = '[SOUND: ON]';
-            }
-        }
-    });
-});
-
-// Keyboard Shortcuts
-window.addEventListener('keydown', (e) => {
-    const key = e.key.toLowerCase();
-    if (key === '1') document.querySelector('[data-mode="poster"]').click();
-    if (key === '2') document.querySelector('[data-mode="edge"]').click();
-    if (key === '3') document.querySelector('[data-mode="polar"]').click();
-    if (key === '4') document.querySelector('[data-mode="close"]').click();
-    if (key === 'c') document.querySelector('[data-toggle="cine"]').click();
-    if (key === 'h') document.querySelector('[data-toggle="hud"]').click();
-    if (key === 'r') document.querySelector('[data-toggle="auto"]').click();
-    if (key === 'm') document.querySelector('[data-toggle="sound"]').click();
-});
-
-// Mission Timer
-let startTime = Date.now() - 28000; // Start at 00:00:28
-function updateTimer() {
-    const elapsed = Math.floor((Date.now() - startTime) / 1000);
-    const h = String(Math.floor(elapsed / 3600)).padStart(2, '0');
-    const m = String(Math.floor((elapsed % 3600) / 60)).padStart(2, '0');
-    const s = String(elapsed % 60).padStart(2, '0');
-    timerEl.textContent = `${h}:${m}:${s}`;
-}
-setInterval(updateTimer, 1000);
-
-// ---- RENDER LOOP ----
-const clock = new THREE.Clock();
-let frames = 0;
-let lastFpsTime = 0;
-
-function animate() {
-    requestAnimationFrame(animate);
-
-    const delta = clock.getDelta();
-    const time = clock.getElapsedTime();
-
-    // Auto Orbit
-    if (autoOrbit) {
-        // Slowly rotate camera around origin
-        const radius = Math.hypot(camera.position.x, camera.position.z);
-        const currentAngle = Math.atan2(camera.position.z, camera.position.x);
-        const newAngle = currentAngle + delta * 0.05;
-        camera.position.x = Math.cos(newAngle) * radius;
-        camera.position.z = Math.sin(newAngle) * radius;
-        camera.lookAt(0, 0, 0);
-    }
-
-    controls.update();
-
-    // Update Uniforms
-    uniforms.u_time.value = time;
-    camera.getWorldPosition(uniforms.u_cameraPos.value);
-    camera.getWorldDirection(uniforms.u_cameraDir.value);
-    uniforms.u_cameraUp.value.copy(camera.up).applyQuaternion(camera.quaternion);
-    uniforms.u_cameraRight.value.crossVectors(uniforms.u_cameraDir.value, uniforms.u_cameraUp.value);
-
-    // Update Stats UI
-    const dist = camera.position.length();
-    statDist.textContent = dist.toFixed(2);
-
-    // Inclination: angle from XZ plane
-    const incl = Math.abs(90 - THREE.MathUtils.radToDeg(camera.position.angleTo(new THREE.Vector3(0, 1, 0))));
-    statIncl.textContent = incl.toFixed(1);
-
-    // FPS Counter
-    frames++;
-    if (time - lastFpsTime >= 1.0) {
-        statFps.textContent = frames;
-        frames = 0;
-        lastFpsTime = time;
-    }
-
-    renderer.render(postScene, postCamera);
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 }
 
-// Start
-animate();
-console.log("Made by Gemini")
+function applyTheme(theme, persist = true) {
+  appState.theme = theme;
+  root.dataset.theme = theme;
+
+  document.querySelectorAll('[data-theme-option]').forEach((button) => {
+    const isSelected = button.dataset.themeOption === theme;
+    button.classList.toggle('is-selected', isSelected);
+    button.setAttribute('aria-pressed', String(isSelected));
+  });
+
+  if (persist) {
+    try {
+      window.localStorage.setItem('mara-theme', theme);
+    } catch (error) {
+      // Theme still applies for the current session when storage is unavailable.
+    }
+  }
+}
+
+function bindThemeControls() {
+  document.querySelectorAll('[data-theme-option]').forEach((button) => {
+    button.addEventListener('click', () => applyTheme(button.dataset.themeOption));
+  });
+
+  applyTheme(getStoredTheme(), false);
+}
+
+function bindNavigation() {
+  const links = [...document.querySelectorAll('[data-nav-target]')];
+  const sections = [...document.querySelectorAll('[data-nav-section]')];
+
+  if (!('IntersectionObserver' in window)) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    const visibleEntry = entries
+      .filter((entry) => entry.isIntersecting)
+      .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+    if (!visibleEntry) return;
+    links.forEach((link) => link.classList.toggle('is-active', link.dataset.navTarget === visibleEntry.target.id));
+  }, { rootMargin: '-25% 0px -60% 0px', threshold: [0.01, 0.2, 0.6] });
+
+  sections.forEach((section) => observer.observe(section));
+}
+
+function bindImageFallbacks() {
+  document.querySelectorAll('.project-artifact img').forEach((image) => {
+    image.addEventListener('error', () => {
+      const artifact = image.closest('.project-artifact');
+      if (artifact) artifact.classList.add('is-broken');
+    });
+  });
+}
+
+function openChat() {
+  if (appState.chatOpen) {
+    chatInput.focus();
+    return;
+  }
+
+  window.clearTimeout(appState.closeTimer);
+  appState.lastFocusedElement = document.activeElement;
+  appState.chatOpen = true;
+  document.body.classList.add('chat-is-open');
+  chat.hidden = false;
+  chatScrim.hidden = false;
+
+  document.querySelectorAll('[data-chat-open]').forEach((button) => {
+    button.setAttribute('aria-expanded', 'true');
+  });
+
+  window.requestAnimationFrame(() => {
+    chat.classList.add('is-open');
+    chatInput.focus();
+  });
+}
+
+function closeChat() {
+  if (!appState.chatOpen) return;
+
+  appState.chatOpen = false;
+  document.body.classList.remove('chat-is-open');
+  chat.classList.remove('is-open');
+  chatScrim.hidden = true;
+
+  document.querySelectorAll('[data-chat-open]').forEach((button) => {
+    button.setAttribute('aria-expanded', 'false');
+  });
+
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const closeDelay = reducedMotion ? 0 : 200;
+  appState.closeTimer = window.setTimeout(() => {
+    chat.hidden = true;
+    if (appState.lastFocusedElement && typeof appState.lastFocusedElement.focus === 'function') {
+      appState.lastFocusedElement.focus();
+    }
+  }, closeDelay);
+}
+
+function bindChatVisibility() {
+  document.querySelectorAll('[data-chat-open]').forEach((button) => button.addEventListener('click', openChat));
+  document.querySelectorAll('[data-chat-close]').forEach((button) => button.addEventListener('click', closeChat));
+  chatScrim.addEventListener('click', closeChat);
+}
+
+function normalizeQuery(value) {
+  return value
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9\s-]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function citationIds(...ids) {
+  return ids.filter((id) => sourceById.has(id));
+}
+
+function fallbackAnswer(query) {
+  const normalized = normalizeQuery(query);
+  const includesAny = (terms) => terms.some((term) => normalized.includes(term));
+
+  if (includesAny(['cedar', 'rail', 'ticketing', 'timetable'])) {
+    return {
+      answer: 'On Cedar, Mara led product direction and interaction design for regional rail ticketing tools. The work focused on making complex journeys and timetable decisions easier to understand.',
+      citations: citationIds('project-cedar-role', 'project-cedar-outcome')
+    };
+  }
+
+  if (includesAny(['northline', 'insurance', 'claims'])) {
+    return {
+      answer: 'Northline was an insurance claims workspace. Mara contributed research synthesis and systems design to make the path from intake to resolution calmer for claims teams.',
+      citations: citationIds('project-northline-role', 'project-northline-outcome')
+    };
+  }
+
+  if (includesAny(['common ground', 'library', 'membership'])) {
+    return {
+      answer: 'Common Ground explored a public-library membership service. Mara worked across service design and prototyping to make the membership journey more legible for visitors and library teams.',
+      citations: citationIds('project-common-ground-role', 'project-common-ground-outcome')
+    };
+  }
+
+  if (includesAny(['available', 'availability', 'when', 'september', 'start', 'book'])) {
+    return {
+      answer: 'Mara is available from September. For a specific engagement, email her with the context, timing, and who needs to be in the room.',
+      citations: citationIds('profile-availability', 'profile-contact')
+    };
+  }
+
+  if (includesAny(['skill', 'skills', 'service', 'process', 'team', 'teams', 'work with', 'research', 'system', 'direction'])) {
+    return {
+      answer: 'Mara works across product direction, research synthesis, and interaction systems. She can join short engagements, embedded teams, or advisory work, and stays involved through the detail of delivery.',
+      citations: citationIds('profile-services', 'profile-statement')
+    };
+  }
+
+  if (includesAny(['contact', 'email', 'linkedin', 'reach', 'hire', 'project'])) {
+    return {
+      answer: 'You can reach Mara at mara@domain.com or through LinkedIn. Include the project context, timing, and who needs to be involved.',
+      citations: citationIds('profile-contact')
+    };
+  }
+
+  return {
+    answer: "I can't find that in the portfolio index. Try a project title, or email Mara for a specific answer.",
+    citations: []
+  };
+}
+
+async function requestPortfolioAnswer(query) {
+  // In production, set these values through a server-side proxy or build-time configuration.
+  // Never expose a provider API key in a public frontend bundle.
+  if (API_ENDPOINT && API_KEY) {
+    const response = await fetch(API_ENDPOINT, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${API_KEY}`
+      },
+      body: JSON.stringify({
+        query,
+        sources: portfolio
+      })
+    });
+
+    if (!response.ok) throw new Error('portfolio-index-unavailable');
+
+    const payload = await response.json();
+    if (!payload || typeof payload.answer !== 'string') throw new Error('portfolio-index-invalid-response');
+
+    return {
+      answer: payload.answer,
+      citations: Array.isArray(payload.citations) ? citationIds(...payload.citations) : []
+    };
+  }
+
+  return fallbackAnswer(query);
+}
+
+function scrollChatToEnd() {
+  window.requestAnimationFrame(() => {
+    chatBody.scrollTo({ top: chatBody.scrollHeight, behavior: 'smooth' });
+  });
+}
+
+function createMessage(role, text, citations = []) {
+  const message = document.createElement('article');
+  message.className = `chat-message chat-message--${role}`;
+
+  const roleLabel = document.createElement('p');
+  roleLabel.className = 'chat-message-role';
+  roleLabel.textContent = role === 'user' ? 'You' : 'Portfolio index';
+
+  const messageText = document.createElement('p');
+  messageText.textContent = text;
+  message.append(roleLabel, messageText);
+
+  if (citations.length > 0) {
+    const citationList = document.createElement('div');
+    citationList.className = 'chat-citations';
+    citationList.setAttribute('aria-label', 'Sources');
+
+    citations.forEach((sourceId) => {
+      const source = sourceById.get(sourceId);
+      if (!source) return;
+
+      const citation = document.createElement('a');
+      citation.className = 'chat-citation';
+      citation.href = `#${source.id}`;
+      citation.dataset.sourceTarget = source.id;
+      citation.textContent = `${source.number} — ${source.title} / ${source.field}`;
+      citationList.appendChild(citation);
+    });
+
+    message.appendChild(citationList);
+  }
+
+  chatTranscript.appendChild(message);
+}
+
+function setChatStatus(text = '', visible = false) {
+  chatStatus.textContent = text;
+  chatStatus.hidden = !visible;
+}
+
+function bindPromptButtons() {
+  document.querySelectorAll('[data-prompt]').forEach((button) => {
+    button.addEventListener('click', () => {
+      chatInput.value = button.dataset.prompt;
+      chatInput.focus();
+    });
+  });
+}
+
+async function handleChatSubmit(event) {
+  event.preventDefault();
+  const query = chatInput.value.trim();
+  if (!query || appState.isLoading) return;
+
+  appState.hasAsked = true;
+  appState.isLoading = true;
+  chatPrompts.hidden = true;
+  createMessage('user', query);
+  chatInput.value = '';
+  setChatStatus('Searching the portfolio index…', true);
+  scrollChatToEnd();
+
+  try {
+    const result = await requestPortfolioAnswer(query);
+    createMessage('assistant', result.answer, result.citations);
+  } catch (error) {
+    createMessage('assistant', 'The portfolio index is unavailable right now. You can still read the case studies or email Mara.', citationIds('profile-contact'));
+  } finally {
+    appState.isLoading = false;
+    setChatStatus('', false);
+    scrollChatToEnd();
+  }
+}
+
+function highlightSource(sourceId) {
+  const matches = [...document.querySelectorAll('[data-source-id]')].filter((element) => element.dataset.sourceId === sourceId);
+  if (matches.length === 0) return;
+
+  document.querySelectorAll('.is-highlighted').forEach((element) => element.classList.remove('is-highlighted'));
+  const row = matches[0].closest('.project-row, .note-row, .contact-closure');
+  const highlightTargets = row ? [row, matches[0]] : [matches[0]];
+  highlightTargets.forEach((element) => element.classList.add('is-highlighted'));
+  appState.highlightedSourceId = sourceId;
+
+  const target = row || matches[0];
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  target.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'center' });
+
+  window.setTimeout(() => {
+    highlightTargets.forEach((element) => element.classList.remove('is-highlighted'));
+    if (appState.highlightedSourceId === sourceId) appState.highlightedSourceId = null;
+  }, 1800);
+}
+
+function bindSourceCitations() {
+  document.addEventListener('click', (event) => {
+    const citation = event.target.closest('[data-source-target]');
+    if (!citation) return;
+    event.preventDefault();
+    const sourceId = citation.dataset.sourceTarget;
+    closeChat();
+    window.setTimeout(() => highlightSource(sourceId), 210);
+  });
+}
+
+function getFocusableElements() {
+  return [...chat.querySelectorAll('button:not([disabled]), a[href], input:not([disabled])')]
+    .filter((element) => !element.closest('[hidden]'));
+}
+
+function bindKeyboardShortcuts() {
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && appState.chatOpen) {
+      event.preventDefault();
+      closeChat();
+      return;
+    }
+
+    if (event.key === '/' && appState.chatOpen && document.activeElement !== chatInput) {
+      event.preventDefault();
+      chatInput.focus();
+      return;
+    }
+
+    if (event.key !== 'Tab' || !appState.chatOpen) return;
+    const focusable = getFocusableElements();
+    if (focusable.length === 0) return;
+
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  });
+}
+
+function init() {
+  bindThemeControls();
+  bindNavigation();
+  bindImageFallbacks();
+  bindChatVisibility();
+  bindPromptButtons();
+  bindSourceCitations();
+  bindKeyboardShortcuts();
+  chatForm.addEventListener('submit', handleChatSubmit);
+}
+
+init();

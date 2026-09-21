@@ -1,92 +1,352 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Double Glowing Heart & Custom Text</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #000;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      canvas {
+        display: block;
+      }
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GARGANTUA | Supermassive Black Hole</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400;700&display=swap"
-        rel="stylesheet">
-    <!-- Custom Styles -->
-    <link rel="stylesheet" href="styles.css">
-</head>
+      /* CSS cho khung nhập tên */
+      .input-container {
+        position: absolute;
+        bottom: 40px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 100;
+      }
 
-<body class="bg-black text-[#ffaa55] overflow-hidden select-none font-['Inter'] antialiased">
-    <!-- WebGL Canvas Container -->
-    <div id="canvas-container" class="absolute inset-0 z-0"></div>
+      #nameInput {
+        padding: 12px 25px;
+        font-size: 1.2rem;
+        background: rgba(0, 0, 0, 0.6);
+        border: 2px solid #064bfa;
+        border-radius: 30px;
+        color: #fff;
+        outline: none;
+        text-align: center;
+        box-shadow: 0 0 15px #064bfa;
+        font-family: Arial, sans-serif;
+        width: 250px;
+        transition: all 0.3s ease;
+      }
 
-    <!-- UI Overlay -->
-    <div id="ui-layer"
-        class="absolute inset-0 z-10 pointer-events-none flex flex-col justify-between p-6 transition-opacity duration-500">
-        <!-- Header -->
-        <header class="flex justify-between items-start">
-            <div class="glow-text">
-                <h1 class="text-4xl md:text-6xl font-bold tracking-[0.2em] uppercase">Gargantua</h1>
-                <p class="text-xs md:text-sm tracking-[0.1em] opacity-80 mt-2 font-['JetBrains_Mono']">
-                    SUPERMASSIVE BLACK HOLE · 1.0 × 10⁸ M☉<br>
-                    SCHWARZSCHILD METRIC // NULL-GEODESIC RAYTRACING
-                </p>
-            </div>
-            <div
-                class="font-['JetBrains_Mono'] text-sm tracking-widest opacity-90 glow-text text-right hidden sm:block">
-                MISSION ELAPSED<br>
-                <span id="timer">00:00:28</span>
-            </div>
-        </header>
+      #nameInput:focus {
+        border-color: #30a2f6;
+        box-shadow: 0 0 25px #30a2f6;
+        width: 300px;
+        background: rgba(0, 0, 0, 0.8);
+      }
 
-        <!-- Bottom Section -->
-        <div class="flex flex-col sm:flex-row justify-between items-end w-full gap-4">
-            <!-- Telemetry / Specs -->
-            <div class="font-['JetBrains_Mono'] text-xs md:text-sm flex flex-col gap-2 opacity-80 glow-text"
-                id="params-panel">
-                <div>OBSERVER DISTANCE: <span id="stat-dist">30.68</span> RS</div>
-                <div>DISK INCLINATION: <span id="stat-incl">14.3</span>°</div>
-                <div>GEODESIC STEPS: <span id="stat-steps">460</span></div>
-                <div>RENDER PROFILE: <span id="stat-profile">CINEMATIC</span></div>
-                <div>FRAME RATE: <span id="stat-fps">60</span> FPS</div>
-            </div>
+      #nameInput::placeholder {
+        color: rgba(255, 255, 255, 0.5);
+      }
+    </style>
+  </head>
 
-            <!-- Controls (Pointer events enabled for interaction) -->
-            <div class="pointer-events-auto flex flex-col items-end gap-6">
-                <!-- Camera Modes -->
-                <div class="flex gap-2 text-xs font-['JetBrains_Mono'] flex-wrap justify-end max-w-sm">
-                    <button class="cam-btn active" data-mode="poster">[POSTER]</button>
-                    <button class="cam-btn" data-mode="edge">[EDGE]</button>
-                    <button class="cam-btn" data-mode="polar">[POLAR]</button>
-                    <button class="cam-btn" data-mode="close">[CLOSE]</button>
-                </div>
-                <!-- Toggles -->
-                <div class="flex gap-2 text-xs font-['JetBrains_Mono'] flex-wrap justify-end max-w-sm">
-                    <button class="toggle-btn active" data-toggle="auto">[AUTO]</button>
-                    <button class="toggle-btn active" data-toggle="cine">[CINEMATIC]</button>
-                    <button class="toggle-btn active" data-toggle="params">[PARAMS]</button>
-                    <button class="toggle-btn active" data-toggle="hud">[HUD]</button>
-                    <button class="toggle-btn" data-toggle="sound">[SOUND: OFF]</button>
-                </div>
-                <!-- Shortcuts -->
-                <div
-                    class="text-[10px] opacity-50 tracking-widest text-right mt-2 font-['JetBrains_Mono'] hidden sm:block">
-                    1-4 VIEWS · C CINE · R ORBIT · P PARAMS · M SOUND · H HUD
-                </div>
-            </div>
-        </div>
+  <body>
+    <div class="input-container">
+      <input
+        type="text"
+        id="nameInput"
+        placeholder="Nhập tên vào đây..."
+        value=""
+        autocomplete="off"
+      />
     </div>
+    <canvas id="heartCanvas"></canvas>
 
-    <!-- Import Maps for Three.js -->
-    <script type="importmap">
-        {
-            "imports": {
-                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
-                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
-            }
+    <script>
+      const canvas = document.getElementById("heartCanvas");
+      const ctx = canvas.getContext("2d");
+      const nameInput = document.getElementById("nameInput");
+
+      let width, height;
+
+      const colors = [
+        "#30a2f6",
+        "#064bfa",
+        "#93c5fd",
+        "#2563eb",
+        "#bfdbfe",
+        "#1d4ed8",
+      ];
+
+      let isExploded = false;
+      let explosionTimeout;
+
+      let floatParticles = [];
+      let burstParticles = [];
+      let outerBurstParticles = [];
+      let textParticles = [];
+
+      const FLOAT_COUNT = 150;
+      const BURST_COUNT = 1500;
+      const OUTER_BURST_COUNT = 1500;
+
+      let currentText = nameInput.value;
+      let baseHeartScale = 15;
+
+      class Particle {
+        constructor(type, baseX = 0, baseY = 0) {
+          this.type = type;
+          this.color = colors[Math.floor(Math.random() * colors.length)];
+
+          this.x = Math.random() * width;
+          this.y = Math.random() * height;
+          this.vx = (Math.random() - 0.5) * 5;
+          this.vy = (Math.random() - 0.5) * 5;
+
+          if (type === "burst" || type === "outer_burst") {
+            this.t = Math.random() * Math.PI * 2;
+            this.offsetX = (Math.random() - 0.5) * 15;
+            this.offsetY = (Math.random() - 0.5) * 15;
+            this.size = Math.random() * 1.5 + 1.5;
+          } else if (type === "float") {
+            this.vx = (Math.random() - 0.5) * 0.8;
+            this.vy = Math.random() * -1 - 0.5;
+            this.size = Math.random() * 2 + 0.5;
+          } else if (type === "text") {
+            this.baseX = baseX;
+            this.baseY = baseY;
+            this.size = Math.random() * 1.5 + 0.8;
+          }
         }
-    </script>
-    <!-- Main Application Logic -->
-    <script type="module" src="main.js"></script>
-</body>
 
+        explode(mouseX, mouseY) {
+          if (
+            this.type === "burst" ||
+            this.type === "outer_burst" ||
+            this.type === "text"
+          ) {
+            const dx = this.x - mouseX;
+            const dy = this.y - mouseY;
+            const distance = Math.sqrt(dx * dx + dy * dy) || 1;
+
+            const force = Math.min(3000 / distance, 50);
+            const angle = Math.atan2(dy, dx);
+
+            this.vx = Math.cos(angle) * force + (Math.random() - 0.5) * 15;
+            this.vy = Math.sin(angle) * force + (Math.random() - 0.5) * 15;
+          }
+        }
+
+        update(time, beatScale, dynamicHeartScale) {
+          if (
+            this.type === "burst" ||
+            this.type === "outer_burst" ||
+            this.type === "text"
+          ) {
+            if (isExploded) {
+              this.vx *= 0.96;
+              this.vy *= 0.96;
+              this.x += this.vx;
+              this.y += this.vy;
+            } else {
+              let targetX, targetY;
+
+              if (this.type === "burst" || this.type === "outer_burst") {
+                const hx = 16 * Math.pow(Math.sin(this.t), 3);
+                const hy = -(
+                  13 * Math.cos(this.t) -
+                  5 * Math.cos(2 * this.t) -
+                  2 * Math.cos(3 * this.t) -
+                  Math.cos(4 * this.t)
+                );
+
+                const finalScale =
+                  this.type === "outer_burst"
+                    ? dynamicHeartScale * 1.25
+                    : dynamicHeartScale;
+
+                targetX = width / 2 + hx * finalScale + this.offsetX;
+                targetY = height / 2 + (hy - 2.5) * finalScale + this.offsetY;
+              } else {
+                targetX = width / 2 + this.baseX * beatScale;
+                targetY = height / 2 + this.baseY * beatScale;
+              }
+
+              const dx = targetX - this.x;
+              const dy = targetY - this.y;
+
+              this.vx += dx * 0.004;
+              this.vy += dy * 0.004;
+
+              this.vx *= 0.9;
+              this.vy *= 0.9;
+
+              this.x += this.vx;
+              this.y += this.vy;
+            }
+          } else if (this.type === "float") {
+            this.x += this.vx;
+            this.y += this.vy;
+            this.x += Math.sin(time * 2 + this.y * 0.01) * 0.5;
+
+            if (this.y < -20) {
+              this.y = height + 20;
+              this.x = Math.random() * width;
+            }
+            if (this.x < -20) this.x = width + 20;
+            if (this.x > width + 20) this.x = -20;
+          }
+        }
+
+        draw(ctx) {
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          ctx.fillStyle = this.color;
+          ctx.shadowBlur =
+            this.type === "burst" ||
+            this.type === "outer_burst" ||
+            this.type === "text"
+              ? 15
+              : 8;
+          ctx.shadowColor = this.color;
+          ctx.fill();
+          ctx.shadowBlur = 0;
+        }
+      }
+
+      function initTextParticles(text) {
+        textParticles = [];
+        ctx.clearRect(0, 0, width, height);
+
+        // Tránh lỗi khi xóa hết chữ trong ô input
+        const displayText = text.trim() === "" ? " " : text;
+
+        const fontSize = Math.min(width * 0.08, 60);
+        ctx.font = `bold ${fontSize}px 'Brush Script MT', 'Great Vibes', cursive, sans-serif`;
+        ctx.fillStyle = "white";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+
+        const textMetrics = ctx.measureText(displayText);
+        const textWidth = textMetrics.width;
+
+        baseHeartScale = (textWidth + 120) / 32;
+        baseHeartScale = Math.max(baseHeartScale, Math.min(width, height) / 45);
+
+        ctx.fillText(displayText, width / 2, height / 2);
+
+        const imageData = ctx.getImageData(0, 0, width, height);
+        const data = imageData.data;
+
+        const step = 4;
+        for (let y = 0; y < height; y += step) {
+          for (let x = 0; x < width; x += step) {
+            const index = (y * width + x) * 4;
+            const alpha = data[index + 3];
+
+            if (alpha > 128) {
+              const baseX = x - width / 2;
+              const baseY = y - height / 2;
+              textParticles.push(new Particle("text", baseX, baseY));
+            }
+          }
+        }
+        ctx.clearRect(0, 0, width, height);
+      }
+
+      function initParticles() {
+        floatParticles = [];
+        burstParticles = [];
+        outerBurstParticles = [];
+
+        for (let i = 0; i < FLOAT_COUNT; i++)
+          floatParticles.push(new Particle("float"));
+        for (let i = 0; i < BURST_COUNT; i++)
+          burstParticles.push(new Particle("burst"));
+        for (let i = 0; i < OUTER_BURST_COUNT; i++)
+          outerBurstParticles.push(new Particle("outer_burst"));
+      }
+
+      function resize() {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+        initTextParticles(currentText);
+      }
+
+      // Xử lý sự kiện khi gõ chữ vào ô input
+      nameInput.addEventListener("input", (e) => {
+        currentText = e.target.value;
+        initTextParticles(currentText);
+      });
+
+      window.addEventListener("resize", resize);
+
+      resize();
+      initParticles();
+
+      canvas.addEventListener("click", (e) => {
+        clearTimeout(explosionTimeout);
+        isExploded = true;
+
+        const rect = canvas.getBoundingClientRect();
+        const mouseX = e.clientX - rect.left;
+        const mouseY = e.clientY - rect.top;
+
+        burstParticles.forEach((p) => p.explode(mouseX, mouseY));
+        outerBurstParticles.forEach((p) => p.explode(mouseX, mouseY));
+        textParticles.forEach((p) => p.explode(mouseX, mouseY));
+
+        explosionTimeout = setTimeout(() => {
+          isExploded = false;
+        }, 5000);
+      });
+
+      function animate() {
+        ctx.fillStyle = "rgba(0, 0, 0, 0.15)";
+        ctx.fillRect(0, 0, width, height);
+
+        const time = Date.now() * 0.001;
+
+        const cycle = (time * 1000) % 1500;
+        let beatScale = 1;
+        if (cycle < 200) {
+          beatScale = 1 + Math.sin((cycle / 200) * Math.PI) * 0.08;
+        } else if (cycle > 300 && cycle < 500) {
+          beatScale = 1 + Math.sin(((cycle - 300) / 200) * Math.PI) * 0.04;
+        }
+
+        const dynamicHeartScale = baseHeartScale * beatScale;
+
+        floatParticles.forEach((p) => {
+          p.update(time, 1, 1);
+          p.draw(ctx);
+        });
+
+        textParticles.forEach((p) => {
+          p.update(time, beatScale, dynamicHeartScale);
+          p.draw(ctx);
+        });
+
+        burstParticles.forEach((p) => {
+          p.update(time, beatScale, dynamicHeartScale);
+          p.draw(ctx);
+        });
+
+        outerBurstParticles.forEach((p) => {
+          p.update(time, beatScale, dynamicHeartScale);
+          p.draw(ctx);
+        });
+
+        requestAnimationFrame(animate);
+      }
+
+      animate();
+    </script>
+  </body>
 </html>
