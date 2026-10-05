@@ -1,100 +1,366 @@
 <!doctype html>
-<html lang="vi">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Xuân Triều 😡</title>
-    <style>
-      body {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        margin: 0;
-        background: #1a1a1a;
-        font-family: sans-serif;
-      }
-      button {
-        padding: 40px 80px;
-        font-size: 48px;
-        font-weight: bold;
-        border: none;
-        border-radius: 20px;
-        background: #6333ff;
-        color: white;
-        cursor: pointer;
-        transition: 0.1s;
-        box-shadow: 0 10px 30px rgba(255, 0, 0, 0.4);
-      }
-      button:active {
-        transform: scale(0.95);
-        background: blue;
-      }
-      .rage {
-        animation: shake 0.3s;
-      }
-      @keyframes shake {
-        0%,
-        100% {
-          transform: translate(0, 0);
-        }
-        25% {
-          transform: translate(-10px, 5px);
-        }
-        50% {
-          transform: translate(10px, -5px);
-        }
-        75% {
-          transform: translate(-5px, 10px);
-        }
-      }
-      #text {
-        position: absolute;
-        font-size: 80px;
-        font-weight: 900;
-        color: #ff4444;
-        opacity: 0;
-        pointer-events: none;
-      }
-      #text.show {
-        animation: pop 1s;
-      }
-      @keyframes pop {
-        0% {
-          opacity: 0;
-          transform: scale(0.5);
-        }
-        20% {
-          opacity: 1;
-          transform: scale(1.3);
-        }
-        80% {
-          opacity: 1;
-        }
-        100% {
-          opacity: 0;
-          transform: scale(2);
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <button id="rageBtn">Xuân Triều 😡</button>
-    <div id="text"><img src="./anh_1.jpg" alt="" /></div>
-
-    <script>
-      const btn = document.getElementById("rageBtn");
-      const text = document.getElementById("text");
-      btn.onclick = () => {
-        document.body.classList.add("rage");
-        text.classList.add("show");
-        setTimeout(() => {
-          document.body.classList.remove("rage");
-        }, 300);
-        setTimeout(() => {
-          text.classList.remove("show");
-        }, 1000);
-        new AudioContext().createOscillator().start();
-      };
-    </script>
-  </body>
-</html>
+<html lang="vi"><head><script>window["__codeletBootstrap__"]=JSON.parse('{"A":"A","B":"20261005-04-df3a3b1","C":{"Abril Fatface":"YACgEZbkUVE,0","Alfa Slab One":"YACgEYS9sJU,0","Anton":"YACgEcYqQ-A,0","Archivo":"YACgEZulLoA,0","Arial Narrow":"YAGyDvJ_4Ts,0","Arial Rounded MT Bold":"YAFcfoaHu-s,0","Arial":"YAGyDvJ_4Ts,0","Avenir Next":"YAFcfmNq6UY,0","Baloo 2":"YADK30bC6HQ,0","Bebas Neue":"YACgESME5ew,0","Bricolage Grotesque":"YAFyMcdwzpc,0","Broken Glyph":"YADZ-exUkv0,0","Canva Sans":"YAFdJjTk5UU,1","Caveat":"YALBs2ploWQ,0","Comic Sans MS":"YAFcfvtOAUY,1","Cormorant Garamond":"YAFdJhX-538,0","Courier New":"YAGzXiGs0_8,0","Courier Prime":"YAD1aFjegN8,0","DM Sans":"YAD1aU3sLnI,0","DM Serif Display":"YAD1aYG82rc,0","Forum":"YACgEcnnqB4,0","Fraunces":"YAFdJpU7Kkk,0","Georgia":"YAGzXkO0pEM,0","Ghost Mono":"YAHQutsX00Q,0","Hanken Grotesk":"YAFcfhwp99E,0","Helvetica Neue":"YAFcf6CtJfI,0","Helvetica":"YAFcf6CtJfI,0","IBM Plex Mono":"YAFdJkmvhGI,0","Impact":"YAFcfnjI7Vk,0","Instrument Serif":"YAHFeOnZNEk,0","Inter":"YAFdJvSyp_k,3","Iowan Old Style":"YAGNIFa8j9o,0","Jacques Francois":"YADK3zbC6RM,0","JetBrains Mono":"YAFdJksXcAk,0","Josefin Sans":"YAFdJjvw9Ps,0","Lato":"YAFdJuFCnaw,0","Libre Baskerville":"YACgEUFdPdA,0","Lobster":"YAD8SnSjSFI,0","Lora":"YACgEXvxf8Q,0","Merriweather":"YACgEXvHxxs,0","Montserrat":"YAFdtQi73Xs,0","Nunito":"YAFdJoNRMmU,1","Oleo Script":"YACgEQQ14jI,0","Oswald":"YACgEQY10lw,0","Pacifico":"YADLjORQ1u4,0","Phantom Sans":"YAFdJvgJ5TU,0","Playfair Display":"YAFdJhem5V8,1","Plus Jakarta Sans":"YAGvf3_u0_Q,0","Poppins":"YAFdJjbTu24,1","Press Start 2P":"YAFyGr-8pmQ,0","Quicksand":"YAFdJpYtCxE,1","Raleway":"YAFdJhmxbVQ,1","Roboto Slab":"YAFdJswIKAg,0","Rockwell":"YAFcfyVZnN0,0","Rye":"YACgEdQP21k,0","Segoe UI":"YAHNdRD1Klw,0","Source Sans 3":"YAG4lO1Mj10,0","Source Serif 4":"YACgEfdj394,0","Space Grotesk":"YADZ-dYEmhg,0","Space Mono":"YADW1-vpsoc,0","Times New Roman":"YAGzXW3gftg,0","Times":"YAGzXW3gftg,0","Trebuchet MS":"YAFcfrglpVA,0","UV Display":"YAEdVfSSpYo,0","UV Sans":"YAFdJvgJ5TU,0","Ubuntu":"YACgERDU--Q,0","Verdana":"YAGzXTctYtQ,0","Work Sans":"YAGXhLOKv44,0","Yellowtail":"YACgEYG4kG4,0","ui-monospace":"YAD1aFjegN8,0","ui-sans-serif":"YACkoD1yZN0,0"}}');</script><script src="/_sdk/6542d56fbfe7a3eb.telemetry_sdk.js" integrity="sha512-ECdM0nK7EkwDuOqho2qxgyRQXyBHk9hZqRKMBr+Xsu6zjeHlt+qkO2N2YRiHN7Kg4e1fEHDhjIp4bGJYVypv1g=="></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Du Lịch Lào Cai</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,600;0,700;1,600&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.577.0/dist/umd/lucide.min.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com/3.4.17" type="text/javascript"></script>
+  <script src="/_sdk/6c2ecc939521f244.data_sdk.js" type="text/javascript" integrity="sha512-gRx8s+XsZDN6mSIQu2sivLZysbV0WHhb5kXNUWlgVb5lCMU1foJYukyMEDPv8Tnoocb8iwqB4XdRrWc7oEGzIQ=="></script>
+  <script src="/_sdk/cfda8dc081c3323c.editing_sdk.js" type="text/javascript" integrity="sha512-dNfMrWh4XAlHjsc8SoR2pkFBBcWdfifAFLC3yNCmnfoD4mTTxOtHMNSuGJMI2GUW0TArNoXmc/EAqYu/Ip9Yiw=="></script>
+  <script src="/_sdk/ab4336f91e694f96.resizing_sdk.js" type="text/javascript" integrity="sha512-cxmeUrBrNlwwLr+tEu/iwM5F3boeK4qDMoH3QjUPqJptkO5NkaDVhQvyIHIn+3EflI5/uubWzkSA78B1tCswgA=="></script>
+ </head>
+ <body data-template-id="__page-root" style="background: rgb(251, 247, 237);">
+  <header class="nav-shell fixed top-0 z-50 w-full">
+   <nav class="site-width flex items-center justify-between py-4" aria-label="Điều hướng chính"><a href="#trang-chu" class="flex flex-col leading-none z-50 relative"> <span data-template-id="brand-logo" class="canva-text font-bold tracking-[.22em] text-[#123c32]" style="color: rgb(18, 60, 50); font-weight: 700; font-style: normal; font-size: 16px;">LÀO CAI</span> <span data-template-id="brand-tagline" class="canva-text mt-1 text-[9px] tracking-[.08em] text-[#527265]" style="color: rgb(82, 114, 101); font-weight: 600; font-style: normal; font-size: 16px;">Nơi Đất Trời Gặp Gỡ</span> </a>
+    <div class="desktop-nav flex items-center gap-7"><a data-template-id="nav-home" class="canva-link nav-link" href="#trang-chu" style="color: rgb(18, 60, 50); font-weight: 600; font-style: normal; font-size: 16px;">Trang chủ</a> <a data-template-id="nav-destinations" class="canva-link nav-link" href="#diem-den" style="color: rgb(18, 60, 50); font-weight: 600; font-style: normal; font-size: 16px;">Điểm đến</a> <a data-template-id="nav-culture" class="canva-link nav-link" href="#van-hoa" style="color: rgb(18, 60, 50); font-weight: 600; font-style: normal; font-size: 16px;">Văn hóa &amp; Ẩm thực</a> <a data-template-id="nav-map" class="canva-link nav-link" href="#ban-do" style="color: rgb(18, 60, 50); font-weight: 600; font-style: normal; font-size: 16px;">Bản đồ</a> <a data-template-id="nav-contact" class="canva-link nav-link" href="#lien-he" style="color: rgb(18, 60, 50); font-weight: 600; font-style: normal; font-size: 16px;">Liên hệ</a>
+    </div><button id="menu-toggle" type="button" class="menu-btn md:hidden z-50 relative p-2 text-[#123c32]" aria-label="Mở menu" aria-expanded="false"><span class="hamburger"></span></button>
+   </nav>
+   <div id="mobile-nav" class="mobile-nav-overlay"><div class="mobile-nav-content flex flex-col items-center justify-center gap-8 h-full pb-10"><a class="mobile-link" href="#trang-chu">Trang chủ</a><a class="mobile-link" href="#diem-den">Điểm đến</a><a class="mobile-link" href="#van-hoa">Văn hóa &amp; Ẩm thực</a><a class="mobile-link" href="#ban-do">Bản đồ</a><a class="mobile-link" href="#lien-he">Liên hệ</a></div></div>
+  </header>
+  <main>
+   <section id="trang-chu" class="hero"><img data-template-id="hero-image" class="canva-image hero-img" loading="lazy" src="https://images.pexels.com/photos/247599/pexels-photo-247599.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1920" alt="Ruộng bậc thang xanh mướt giữa núi rừng">
+    <div class="site-width hero-content"><span data-template-id="hero-badge" class="canva-tag inline-flex rounded-full border border-white/40 bg-white/10 px-4 py-2 text-xs font-bold tracking-widest backdrop-blur" style="background: rgba(255, 255, 255, 0.12); color: rgb(255, 255, 255); font-weight: 700; font-style: normal; font-size: 16px;">KHÁM PHÁ TÂY BẮC</span>
+     <h1 data-template-id="hero-title" class="canva-text display mt-6 max-w-4xl text-5xl leading-[.98] md:text-7xl reveal-left" style="color: rgb(255, 255, 255); font-weight: 700; font-style: normal; font-size: 32px;">Lào Cai - Nơi Đất Trời Gặp Gỡ</h1>
+     <p data-template-id="hero-description" class="canva-text mt-6 max-w-xl text-base leading-7 text-white/90 md:text-lg reveal-left delay-100" style="color: rgb(255, 255, 255); font-weight: 400; font-style: normal; font-size: 18px;">Bắt đầu hành trình giữa núi rừng, mây trời và những câu chuyện văn hóa bản địa đầy mê hoặc.</p><a data-template-id="hero-cta" class="canva-button primary-btn mt-8 reveal-left delay-200" href="#diem-den" style="background: rgb(216, 157, 36); color: rgb(255, 255, 255); font-weight: 700; font-style: normal; font-size: 16px;">Bắt đầu hành trình</a> <a href="#gioi-thieu" class="mt-12 flex w-fit items-center gap-3 text-xs font-bold tracking-widest text-white/80 reveal-left delay-300"><span class="h-10 w-px bg-white/60"></span><span data-template-id="scroll-label" class="canva-text" style="color: rgb(255, 255, 255); font-weight: 700; font-style: normal; font-size: 16px;">CUỘN ĐỂ KHÁM PHÁ</span></a>
+    </div>
+   </section>
+   <div class="motif"></div>
+   <section id="gioi-thieu" class="section">
+    <div class="site-width grid items-center gap-12 lg:grid-cols-2">
+     <div class="reveal-left">
+      <p data-template-id="about-kicker" class="canva-text eyebrow text-[#b94732]" style="color: rgb(185, 71, 50); font-weight: 700; font-style: normal; font-size: 16px;">LÀO CAI TRONG MỘT ÁNH NHÌN</p>
+      <h2 data-template-id="about-title" class="canva-text section-title mt-4 max-w-lg" style="color: rgb(18, 60, 50); font-weight: 700; font-style: normal; font-size: 24px;">Một miền đất, ngàn trải nghiệm</h2>
+      <p data-template-id="about-text" class="canva-text mt-6 max-w-xl leading-8 text-[#38564d]" style="color: rgb(56, 86, 77); font-weight: 400; font-style: normal; font-size: 17px;">Lào Cai là nơi thiên nhiên hùng vĩ gặp gỡ khí hậu ôn đới đặc trưng và nhịp sống đa sắc của 25 dân tộc anh em. Mỗi mùa, mỗi cung đường lại mở ra một trải nghiệm mới: mây phủ đỉnh cao, lúa chín trên ruộng bậc thang, chợ phiên rực rỡ và những bản làng bình yên.</p>
+      <div class="mt-9 grid grid-cols-1 gap-4 sm:grid-cols-3">
+       <div class="stat">
+        <strong data-template-id="stat-one-value" class="canva-text" style="color: rgb(18, 60, 50); font-weight: 700; font-style: normal; font-size: 16px;">25</strong><span data-template-id="stat-one-label" class="canva-text text-sm text-[#527265]" style="color: rgb(82, 114, 101); font-weight: 400; font-style: normal; font-size: 16px;">dân tộc anh em</span>
+       </div>
+       <div class="stat">
+        <strong data-template-id="stat-two-value" class="canva-text" style="color: rgb(18, 60, 50); font-weight: 700; font-style: normal; font-size: 16px;">3.143m</strong><span data-template-id="stat-two-label" class="canva-text text-sm text-[#527265]" style="color: rgb(82, 114, 101); font-weight: 400; font-style: normal; font-size: 16px;">Fansipan</span>
+       </div>
+       <div class="stat">
+        <strong data-template-id="stat-three-value" class="canva-text" style="color: rgb(18, 60, 50); font-weight: 700; font-style: normal; font-size: 16px;">Bốn mùa</strong><span data-template-id="stat-three-label" class="canva-text text-sm text-[#527265]" style="color: rgb(82, 114, 101); font-weight: 400; font-style: normal; font-size: 16px;">trải nghiệm</span>
+       </div>
+      </div>
+     </div>
+     <div class="reveal-right image-frame h-[460px]">
+      <img data-template-id="about-image" class="canva-image" loading="lazy" src="https://images.pexels.com/photos/23961517/pexels-photo-23961517.jpeg" alt="Bản làng Việt Nam giữa những thửa ruộng bậc thang xanh">
+     </div>
+    </div>
+   </section>
+   <div class="motif"></div>
+   <section id="diem-den" class="section bg-[#edf2e9]">
+    <div class="site-width">
+     <div class="reveal-zoom flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
+      <div>
+       <p data-template-id="destination-kicker" class="canva-text eyebrow text-[#b94732]" style="color: rgb(185, 71, 50); font-weight: 700; font-style: normal; font-size: 16px;">ĐI QUA NHỮNG CUNG ĐƯỜNG</p>
+       <h2 data-template-id="destination-title" class="canva-text section-title mt-4" style="color: rgb(18, 60, 50); font-weight: 700; font-style: normal; font-size: 24px;">Khám phá điểm đến</h2>
+      </div>
+      <div class="w-full max-w-sm relative">
+       <i data-lucide="search" class="absolute left-4 top-3.5 h-4 w-4 text-[#527265]"></i><label for="destination-search" class="sr-only">Tìm kiếm địa danh</label><input id="destination-search" class="search-box pl-10" type="search" placeholder="Tìm kiếm địa danh">
+      </div>
+     </div>
+     <div class="reveal-zoom delay-100 mt-8 flex flex-wrap gap-2" role="tablist"><button data-region="all" class="filter-btn active" type="button">Tất cả</button> <button data-region="sapa" class="filter-btn" type="button">Sa Pa</button> <button data-region="batsat" class="filter-btn" type="button">Bát Xát</button> <button data-region="bacha" class="filter-btn" type="button">Bắc Hà &amp; Si Ma Cai</button> <button data-region="other" class="filter-btn" type="button">Lào Cai &amp; các huyện khác</button>
+     </div>
+     <div id="destination-grid" class="mt-9 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <article data-region="sapa" class="destination-card reveal">
+       <img data-template-id="card-fansipan-image" class="canva-image" loading="lazy" src="https://images.pexels.com/photos/34635152/pexels-photo-34635152.jpeg" alt="Núi mây hùng vĩ ở Lào Cai">
+       <div class="card-body">
+        <span data-template-id="card-fansipan-region" class="canva-text region" style="color: rgb(61, 107, 66); font-weight: 700; font-style: normal; font-size: 16px;">Sa Pa</span>
+        <h3 data-template-id="card-fansipan-title" class="canva-text mt-2 text-xl font-bold text-[#123c32]" style="color: rgb(18, 60, 50); font-weight: 700; font-style: normal; font-size: 19px;">Đỉnh Fansipan</h3>
+        <p data-template-id="card-fansipan-desc" class="canva-text mt-2 text-sm leading-6 text-[#527265]" style="color: rgb(82, 114, 101); font-weight: 400; font-style: normal; font-size: 16px;">Nóc nhà Đông Dương, biển mây và hành trình chinh phục đỉnh cao.</p><button class="explore-btn detail-trigger" type="button">Khám phá <i data-lucide="arrow-up-right" class="h-4 w-4"></i></button>
+       </div>
+      </article>
+      <article data-region="sapa" class="destination-card reveal">
+       <img data-template-id="card-catcat-image" class="canva-image" loading="lazy" src="https://images.pexels.com/photos/36223140/pexels-photo-36223140.jpeg" alt="Kiến trúc truyền thống ở bản Cát Cát">
+       <div class="card-body">
+        <span data-template-id="card-catcat-region" class="canva-text region" style="color: rgb(61, 107, 66); font-weight: 700; font-style: normal; font-size: 16px;">Sa Pa</span>
+        <h3 data-template-id="card-catcat-title" class="canva-text mt-2 text-xl font-bold text-[#123c32]" style="color: rgb(18, 60, 50); font-weight: 700; font-style: normal; font-size: 19px;">Bản Cát Cát</h3>
+        <p data-template-id="card-catcat-desc" class="canva-text mt-2 text-sm leading-6 text-[#527265]" style="color: rgb(82, 114, 101); font-weight: 400; font-style: normal; font-size: 16px;">Bản làng người H’Mông với ruộng bậc thang, thác nước và nghề thủ công.</p><button class="explore-btn detail-trigger" type="button">Khám phá <i data-lucide="arrow-up-right" class="h-4 w-4"></i></button>
+       </div>
+      </article>
+      <article data-region="sapa" class="destination-card reveal">
+       <img data-template-id="card-tavan-image" class="canva-image" loading="lazy" src="https://images.pexels.com/photos/37650250/pexels-photo-37650250.jpeg" alt="Ruộng bậc thang và bản làng tại Sa Pa">
+       <div class="card-body">
+        <span data-template-id="card-tavan-region" class="canva-text region" style="color: rgb(61, 107, 66); font-weight: 700; font-style: normal; font-size: 16px;">Sa Pa</span>
+        <h3 data-template-id="card-tavan-title" class="canva-text mt-2 text-xl font-bold text-[#123c32]" style="color: rgb(18, 60, 50); font-weight: 700; font-style: normal; font-size: 19px;">Bản Tả Van</h3>
+        <p data-template-id="card-tavan-desc" class="canva-text mt-2 text-sm leading-6 text-[#527265]" style="color: rgb(82, 114, 101); font-weight: 400; font-style: normal; font-size: 16px;">Không gian bản địa yên bình giữa thung lũng Mường Hoa.</p><button class="explore-btn detail-trigger" type="button">Khám phá <i data-lucide="arrow-up-right" class="h-4 w-4"></i></button>
+       </div>
+      </article>
+      <article data-region="sapa" class="destination-card reveal">
+       <img data-template-id="card-muonghoa-image" class="canva-image" loading="lazy" src="https://images.pexels.com/photos/37724187/pexels-photo-37724187.jpeg" alt="Thung lũng ruộng bậc thang tại Sa Pa">
+       <div class="card-body">
+        <span data-template-id="card-muonghoa-region" class="canva-text region" style="color: rgb(61, 107, 66); font-weight: 700; font-style: normal; font-size: 16px;">Sa Pa</span>
+        <h3 data-template-id="card-muonghoa-title" class="canva-text mt-2 text-xl font-bold text-[#123c32]" style="color: rgb(18, 60, 50); font-weight: 700; font-style: normal; font-size: 19px;">Thung lũng Mường Hoa</h3>
+        <p data-template-id="card-muonghoa-desc" class="canva-text mt-2 text-sm leading-6 text-[#527265]" style="color: rgb(82, 114, 101); font-weight: 400; font-style: normal; font-size: 16px;">Ruộng bậc thang trải dài và những bãi đá cổ kỳ bí.</p><button class="explore-btn detail-trigger" type="button">Khám phá <i data-lucide="arrow-up-right" class="h-4 w-4"></i></button>
+       </div>
+      </article>
+      <article data-region="sapa" class="destination-card reveal">
+       <img data-template-id="card-hamrong-image" class="canva-image" loading="lazy" src="https://images.pexels.com/photos/27238376/pexels-photo-27238376.jpeg" alt="Mây sớm phủ bản làng miền núi Lào Cai">
+       <div class="card-body">
+        <span data-template-id="card-hamrong-region" class="canva-text region" style="color: rgb(61, 107, 66); font-weight: 700; font-style: normal; font-size: 16px;">Sa Pa</span>
+        <h3 data-template-id="card-hamrong-title" class="canva-text mt-2 text-xl font-bold text-[#123c32]" style="color: rgb(18, 60, 50); font-weight: 700; font-style: normal; font-size: 19px;">Núi Hàm Rồng</h3>
+        <p data-template-id="card-hamrong-desc" class="canva-text mt-2 text-sm leading-6 text-[#527265]" style="color: rgb(82, 114, 101); font-weight: 400; font-style: normal; font-size: 16px;">Điểm ngắm toàn cảnh Sa Pa giữa vườn hoa và mây núi.</p><button class="explore-btn detail-trigger" type="button">Khám phá <i data-lucide="arrow-up-right" class="h-4 w-4"></i></button>
+       </div>
+      </article>
+      <article data-region="sapa" class="destination-card reveal">
+       <img data-template-id="card-oquyho-image" class="canva-image" loading="lazy" src="https://images.pexels.com/photos/5531367/pexels-photo-5531367.jpeg" alt="Dãy núi xanh phủ sương mù">
+       <div class="card-body">
+        <span data-template-id="card-oquyho-region" class="canva-text region" style="color: rgb(61, 107, 66); font-weight: 700; font-style: normal; font-size: 16px;">Sa Pa</span>
+        <h3 data-template-id="card-oquyho-title" class="canva-text mt-2 text-xl font-bold text-[#123c32]" style="color: rgb(18, 60, 50); font-weight: 700; font-style: normal; font-size: 19px;">Đèo Ô Quy Hồ</h3>
+        <p data-template-id="card-oquyho-desc" class="canva-text mt-2 text-sm leading-6 text-[#527265]" style="color: rgb(82, 114, 101); font-weight: 400; font-style: normal; font-size: 16px;">Cung đường đèo hùng vĩ nối mây trời Hoàng Liên Sơn.</p><button class="explore-btn detail-trigger" type="button">Khám phá <i data-lucide="arrow-up-right" class="h-4 w-4"></i></button>
+       </div>
+      </article>
+      <article data-region="sapa" class="destination-card reveal">
+       <img data-template-id="card-thacbac-image" class="canva-image" loading="lazy" src="https://images.pexels.com/photos/34157849/pexels-photo-34157849.jpeg" alt="Thác nước giữa rừng núi Lào Cai">
+       <div class="card-body">
+        <span data-template-id="card-thacbac-region" class="canva-text region" style="color: rgb(61, 107, 66); font-weight: 700; font-style: normal; font-size: 16px;">Sa Pa</span>
+        <h3 data-template-id="card-thacbac-title" class="canva-text mt-2 text-xl font-bold text-[#123c32]" style="color: rgb(18, 60, 50); font-weight: 700; font-style: normal; font-size: 19px;">Thác Bạc</h3>
+        <p data-template-id="card-thacbac-desc" class="canva-text mt-2 text-sm leading-6 text-[#527265]" style="color: rgb(82, 114, 101); font-weight: 400; font-style: normal; font-size: 16px;">Dòng thác trắng xóa giữa rừng núi.</p><button class="explore-btn detail-trigger" type="button">Khám phá <i data-lucide="arrow-up-right" class="h-4 w-4"></i></button>
+       </div>
+      </article>
+      <article data-region="sapa" class="destination-card reveal">
+       <img data-template-id="card-thactinhyeu-image" class="canva-image" loading="lazy" src="https://images.pexels.com/photos/29118440/pexels-photo-29118440.jpeg" alt="Thác nước xanh mát tại Lào Cai">
+       <div class="card-body">
+        <span data-template-id="card-thactinhyeu-region" class="canva-text region" style="color: rgb(61, 107, 66); font-weight: 700; font-style: normal; font-size: 16px;">Sa Pa</span>
+        <h3 data-template-id="card-thactinhyeu-title" class="canva-text mt-2 text-xl font-bold text-[#123c32]" style="color: rgb(18, 60, 50); font-weight: 700; font-style: normal; font-size: 19px;">Thác Tình Yêu</h3>
+        <p data-template-id="card-thactinhyeu-desc" class="canva-text mt-2 text-sm leading-6 text-[#527265]" style="color: rgb(82, 114, 101); font-weight: 400; font-style: normal; font-size: 16px;">Thác nước thơ mộng gắn với truyền thuyết tình yêu.</p><button class="explore-btn detail-trigger" type="button">Khám phá <i data-lucide="arrow-up-right" class="h-4 w-4"></i></button>
+       </div>
+      </article>
+      <article data-region="batsat" class="destination-card reveal">
+       <img data-template-id="card-yty-image" class="canva-image" loading="lazy" src="https://images.pexels.com/photos/14025262/pexels-photo-14025262.jpeg" alt="Ruộng bậc thang vùng núi phía Bắc">
+       <div class="card-body">
+        <span data-template-id="card-yty-region" class="canva-text region" style="color: rgb(61, 107, 66); font-weight: 700; font-style: normal; font-size: 16px;">Bát Xát</span>
+        <h3 data-template-id="card-yty-title" class="canva-text mt-2 text-xl font-bold text-[#123c32]" style="color: rgb(18, 60, 50); font-weight: 700; font-style: normal; font-size: 19px;">Y Tý</h3>
+        <p data-template-id="card-yty-desc" class="canva-text mt-2 text-sm leading-6 text-[#527265]" style="color: rgb(82, 114, 101); font-weight: 400; font-style: normal; font-size: 16px;">Thiên đường săn mây với ruộng bậc thang và bản làng vùng cao.</p><button class="explore-btn detail-trigger" type="button">Khám phá <i data-lucide="arrow-up-right" class="h-4 w-4"></i></button>
+       </div>
+      </article>
+      <article data-region="batsat" class="destination-card reveal">
+       <img data-template-id="card-lungpo-image" class="canva-image" loading="lazy" src="https://images.pexels.com/photos/39020755/pexels-photo-39020755.jpeg" alt="Dòng sông giữa núi non xanh mướt">
+       <div class="card-body">
+        <span data-template-id="card-lungpo-region" class="canva-text region" style="color: rgb(61, 107, 66); font-weight: 700; font-style: normal; font-size: 16px;">Bát Xát</span>
+        <h3 data-template-id="card-lungpo-title" class="canva-text mt-2 text-xl font-bold text-[#123c32]" style="color: rgb(18, 60, 50); font-weight: 700; font-style: normal; font-size: 19px;">Ngã ba Lũng Pô</h3>
+        <p data-template-id="card-lungpo-desc" class="canva-text mt-2 text-sm leading-6 text-[#527265]" style="color: rgb(82, 114, 101); font-weight: 400; font-style: normal; font-size: 16px;">Nơi con sông Hồng chảy vào đất Việt.</p><button class="explore-btn detail-trigger" type="button">Khám phá <i data-lucide="arrow-up-right" class="h-4 w-4"></i></button>
+       </div>
+      </article>
+      <article data-region="batsat" class="destination-card reveal">
+       <img data-template-id="card-rungyty-image" class="canva-image" loading="lazy" src="https://images.pexels.com/photos/18305391/pexels-photo-18305391.jpeg" alt="Nắng xuyên qua núi rừng Lào Cai">
+       <div class="card-body">
+        <span data-template-id="card-rungyty-region" class="canva-text region" style="color: rgb(61, 107, 66); font-weight: 700; font-style: normal; font-size: 16px;">Bát Xát</span>
+        <h3 data-template-id="card-rungyty-title" class="canva-text mt-2 text-xl font-bold text-[#123c32]" style="color: rgb(18, 60, 50); font-weight: 700; font-style: normal; font-size: 19px;">Rừng già Y Tý</h3>
+        <p data-template-id="card-rungyty-desc" class="canva-text mt-2 text-sm leading-6 text-[#527265]" style="color: rgb(82, 114, 101); font-weight: 400; font-style: normal; font-size: 16px;">Không gian nguyên sơ xanh mát giữa núi rừng.</p><button class="explore-btn detail-trigger" type="button">Khám phá <i data-lucide="arrow-up-right" class="h-4 w-4"></i></button>
+       </div>
+      </article>
+      <article data-region="batsat" class="destination-card reveal">
+       <img data-template-id="card-muonghum-image" class="canva-image" loading="lazy" src="https://images.pexels.com/photos/37841484/pexels-photo-37841484.jpeg" alt="Chợ truyền thống nhộn nhịp ở miền núi Việt Nam">
+       <div class="card-body">
+        <span data-template-id="card-muonghum-region" class="canva-text region" style="color: rgb(61, 107, 66); font-weight: 700; font-style: normal; font-size: 16px;">Bát Xát</span>
+        <h3 data-template-id="card-muonghum-title" class="canva-text mt-2 text-xl font-bold text-[#123c32]" style="color: rgb(18, 60, 50); font-weight: 700; font-style: normal; font-size: 19px;">Chợ phiên Mường Hum</h3>
+        <p data-template-id="card-muonghum-desc" class="canva-text mt-2 text-sm leading-6 text-[#527265]" style="color: rgb(82, 114, 101); font-weight: 400; font-style: normal; font-size: 16px;">Sắc màu giao thương và văn hóa các dân tộc vùng cao.</p><button class="explore-btn detail-trigger" type="button">Khám phá <i data-lucide="arrow-up-right" class="h-4 w-4"></i></button>
+       </div>
+      </article>
+      <article data-region="bacha" class="destination-card reveal">
+       <img data-template-id="card-bachamarket-image" class="canva-image" loading="lazy" src="https://images.pexels.com/photos/37688702/pexels-photo-37688702.jpeg" alt="Người dân trong trang phục truyền thống tại chợ Bắc Hà">
+       <div class="card-body">
+        <span data-template-id="card-bachamarket-region" class="canva-text region" style="color: rgb(61, 107, 66); font-weight: 700; font-style: normal; font-size: 16px;">Bắc Hà</span>
+        <h3 data-template-id="card-bachamarket-title" class="canva-text mt-2 text-xl font-bold text-[#123c32]" style="color: rgb(18, 60, 50); font-weight: 700; font-style: normal; font-size: 19px;">Chợ phiên Bắc Hà</h3>
+        <p data-template-id="card-bachamarket-desc" class="canva-text mt-2 text-sm leading-6 text-[#527265]" style="color: rgb(82, 114, 101); font-weight: 400; font-style: normal; font-size: 16px;">Một trong những phiên chợ vùng cao đặc sắc nhất Tây Bắc.</p><button class="explore-btn detail-trigger" type="button">Khám phá <i data-lucide="arrow-up-right" class="h-4 w-4"></i></button>
+       </div>
+      </article>
+      <article data-region="bacha" class="destination-card reveal">
+       <img data-template-id="card-hoangatuong-image" class="canva-image" loading="lazy" src="https://images.pexels.com/photos/14013326/pexels-photo-14013326.jpeg" alt="Dinh Hoàng A Tưởng nhìn từ trên cao">
+       <div class="card-body">
+        <span data-template-id="card-hoangatuong-region" class="canva-text region" style="color: rgb(61, 107, 66); font-weight: 700; font-style: normal; font-size: 16px;">Bắc Hà</span>
+        <h3 data-template-id="card-hoangatuong-title" class="canva-text mt-2 text-xl font-bold text-[#123c32]" style="color: rgb(18, 60, 50); font-weight: 700; font-style: normal; font-size: 19px;">Dinh Hoàng A Tưởng</h3>
+        <p data-template-id="card-hoangatuong-desc" class="canva-text mt-2 text-sm leading-6 text-[#527265]" style="color: rgb(82, 114, 101); font-weight: 400; font-style: normal; font-size: 16px;">Công trình kiến trúc lịch sử nổi bật giữa cao nguyên trắng.</p><button class="explore-btn detail-trigger" type="button">Khám phá <i data-lucide="arrow-up-right" class="h-4 w-4"></i></button>
+       </div>
+      </article>
+      <article data-region="bacha" class="destination-card reveal">
+       <img data-template-id="card-cancau-image" class="canva-image" loading="lazy" src="https://images.pexels.com/photos/35315297/pexels-photo-35315297.jpeg" alt="Phiên chợ vùng cao với trang phục truyền thống rực rỡ">
+       <div class="card-body">
+        <span data-template-id="card-cancau-region" class="canva-text region" style="color: rgb(61, 107, 66); font-weight: 700; font-style: normal; font-size: 16px;">Si Ma Cai</span>
+        <h3 data-template-id="card-cancau-title" class="canva-text mt-2 text-xl font-bold text-[#123c32]" style="color: rgb(18, 60, 50); font-weight: 700; font-style: normal; font-size: 19px;">Chợ Cán Cấu</h3>
+        <p data-template-id="card-cancau-desc" class="canva-text mt-2 text-sm leading-6 text-[#527265]" style="color: rgb(82, 114, 101); font-weight: 400; font-style: normal; font-size: 16px;">Chợ phiên rực rỡ sắc màu bên những dãy núi đá.</p><button class="explore-btn detail-trigger" type="button">Khám phá <i data-lucide="arrow-up-right" class="h-4 w-4"></i></button>
+       </div>
+      </article>
+      <article data-region="bacha" class="destination-card reveal">
+       <img data-template-id="card-hoabacha-image" class="canva-image" loading="lazy" src="https://images.pexels.com/photos/31915378/pexels-photo-31915378.jpeg" alt="Khung cảnh hoa nở ở miền núi phía Bắc">
+       <div class="card-body">
+        <span data-template-id="card-hoabacha-region" class="canva-text region" style="color: rgb(61, 107, 66); font-weight: 700; font-style: normal; font-size: 16px;">Bắc Hà</span>
+        <h3 data-template-id="card-hoabacha-title" class="canva-text mt-2 text-xl font-bold text-[#123c32]" style="color: rgb(18, 60, 50); font-weight: 700; font-style: normal; font-size: 19px;">Thung lũng hoa Bắc Hà</h3>
+        <p data-template-id="card-hoabacha-desc" class="canva-text mt-2 text-sm leading-6 text-[#527265]" style="color: rgb(82, 114, 101); font-weight: 400; font-style: normal; font-size: 16px;">Không gian hoa theo mùa giữa cao nguyên.</p><button class="explore-btn detail-trigger" type="button">Khám phá <i data-lucide="arrow-up-right" class="h-4 w-4"></i></button>
+       </div>
+      </article>
+      <article data-region="other" class="destination-card reveal">
+       <img data-template-id="card-cuakhau-image" class="canva-image" loading="lazy" src="https://images.pexels.com/photos/28747658/pexels-photo-28747658.jpeg" alt="Cổng kiến trúc giữa núi rừng Sa Pa">
+       <div class="card-body">
+        <span data-template-id="card-cuakhau-region" class="canva-text region" style="color: rgb(61, 107, 66); font-weight: 700; font-style: normal; font-size: 16px;">Thành phố Lào Cai</span>
+        <h3 data-template-id="card-cuakhau-title" class="canva-text mt-2 text-xl font-bold text-[#123c32]" style="color: rgb(18, 60, 50); font-weight: 700; font-style: normal; font-size: 19px;">Cửa khẩu Quốc tế Lào Cai</h3>
+        <p data-template-id="card-cuakhau-desc" class="canva-text mt-2 text-sm leading-6 text-[#527265]" style="color: rgb(82, 114, 101); font-weight: 400; font-style: normal; font-size: 16px;">Điểm giao thương sôi động nơi biên giới.</p><button class="explore-btn detail-trigger" type="button">Khám phá <i data-lucide="arrow-up-right" class="h-4 w-4"></i></button>
+       </div>
+      </article>
+      <article data-region="other" class="destination-card reveal">
+       <img data-template-id="card-cotmoc-image" class="canva-image" loading="lazy" src="https://images.pexels.com/photos/27629338/pexels-photo-27629338.jpeg" alt="Thung lũng xanh và núi non Lào Cai">
+       <div class="card-body">
+        <span data-template-id="card-cotmoc-region" class="canva-text region" style="color: rgb(61, 107, 66); font-weight: 700; font-style: normal; font-size: 16px;">Thành phố Lào Cai</span>
+        <h3 data-template-id="card-cotmoc-title" class="canva-text mt-2 text-xl font-bold text-[#123c32]" style="color: rgb(18, 60, 50); font-weight: 700; font-style: normal; font-size: 19px;">Cột mốc 102</h3>
+        <p data-template-id="card-cotmoc-desc" class="canva-text mt-2 text-sm leading-6 text-[#527265]" style="color: rgb(82, 114, 101); font-weight: 400; font-style: normal; font-size: 16px;">Dấu mốc biên cương giàu ý nghĩa.</p><button class="explore-btn detail-trigger" type="button">Khám phá <i data-lucide="arrow-up-right" class="h-4 w-4"></i></button>
+       </div>
+      </article>
+      <article data-region="other" class="destination-card reveal">
+       <img data-template-id="card-denthuong-image" class="canva-image" loading="lazy" src="https://images.pexels.com/photos/37139428/pexels-photo-37139428.jpeg" alt="Ngôi chùa truyền thống tại Lào Cai">
+       <div class="card-body">
+        <span data-template-id="card-denthuong-region" class="canva-text region" style="color: rgb(61, 107, 66); font-weight: 700; font-style: normal; font-size: 16px;">Thành phố Lào Cai</span>
+        <h3 data-template-id="card-denthuong-title" class="canva-text mt-2 text-xl font-bold text-[#123c32]" style="color: rgb(18, 60, 50); font-weight: 700; font-style: normal; font-size: 19px;">Đền Thượng</h3>
+        <p data-template-id="card-denthuong-desc" class="canva-text mt-2 text-sm leading-6 text-[#527265]" style="color: rgb(82, 114, 101); font-weight: 400; font-style: normal; font-size: 16px;">Không gian tâm linh trên vùng đất biên giới.</p><button class="explore-btn detail-trigger" type="button">Khám phá <i data-lucide="arrow-up-right" class="h-4 w-4"></i></button>
+       </div>
+      </article>
+      <article data-region="other" class="destination-card reveal">
+       <img data-template-id="card-denmau-image" class="canva-image" loading="lazy" src="https://images.pexels.com/photos/36597602/pexels-photo-36597602.jpeg" alt="Chùa Việt Nam với cờ lễ hội rực rỡ">
+       <div class="card-body">
+        <span data-template-id="card-denmau-region" class="canva-text region" style="color: rgb(61, 107, 66); font-weight: 700; font-style: normal; font-size: 16px;">Thành phố Lào Cai</span>
+        <h3 data-template-id="card-denmau-title" class="canva-text mt-2 text-xl font-bold text-[#123c32]" style="color: rgb(18, 60, 50); font-weight: 700; font-style: normal; font-size: 19px;">Đền Mẫu</h3>
+        <p data-template-id="card-denmau-desc" class="canva-text mt-2 text-sm leading-6 text-[#527265]" style="color: rgb(82, 114, 101); font-weight: 400; font-style: normal; font-size: 16px;">Điểm đến văn hóa, tín ngưỡng bên sông Hồng.</p><button class="explore-btn detail-trigger" type="button">Khám phá <i data-lucide="arrow-up-right" class="h-4 w-4"></i></button>
+       </div>
+      </article>
+      <article data-region="other" class="destination-card reveal">
+       <img data-template-id="card-baonha-image" class="canva-image" loading="lazy" src="https://images.pexels.com/photos/19828771/pexels-photo-19828771.jpeg" alt="Cổng đền truyền thống Việt Nam giữa cây xanh">
+       <div class="card-body">
+        <span data-template-id="card-baonha-region" class="canva-text region" style="color: rgb(61, 107, 66); font-weight: 700; font-style: normal; font-size: 16px;">Bảo Yên</span>
+        <h3 data-template-id="card-baonha-title" class="canva-text mt-2 text-xl font-bold text-[#123c32]" style="color: rgb(18, 60, 50); font-weight: 700; font-style: normal; font-size: 19px;">Đền Bảo Hà</h3>
+        <p data-template-id="card-baonha-desc" class="canva-text mt-2 text-sm leading-6 text-[#527265]" style="color: rgb(82, 114, 101); font-weight: 400; font-style: normal; font-size: 16px;">Di tích tâm linh nổi tiếng giữa cảnh quan núi rừng.</p><button class="explore-btn detail-trigger" type="button">Khám phá <i data-lucide="arrow-up-right" class="h-4 w-4"></i></button>
+       </div>
+      </article>
+     </div>
+     <p id="no-results" class="hidden py-12 text-center text-[#527265]">Chưa tìm thấy điểm đến phù hợp. Hãy thử một từ khóa khác.</p>
+    </div>
+   </section>
+   <section id="van-hoa" class="section">
+    <div class="site-width">
+     <div class="reveal-left max-w-2xl">
+      <p data-template-id="culture-kicker" class="canva-text eyebrow text-[#b94732]" style="color: rgb(185, 71, 50); font-weight: 700; font-style: normal; font-size: 16px;">BẢN SẮC CHẠM VÀO GIÁC QUAN</p>
+      <h2 data-template-id="culture-title" class="canva-text section-title mt-4" style="color: rgb(18, 60, 50); font-weight: 700; font-style: normal; font-size: 24px;">Trải nghiệm văn hóa &amp; ẩm thực</h2>
+     </div>
+     <div class="mt-12">
+      <h3 data-template-id="food-heading" class="canva-text display text-3xl text-[#123c32]" style="color: rgb(18, 60, 50); font-weight: 700; font-style: normal; font-size: 19px;">Hương vị vùng cao</h3>
+      <div class="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+       <article class="experience-card reveal">
+        <img data-template-id="food-thangco-image" class="canva-image" loading="lazy" src="https://images.pexels.com/photos/36090553/pexels-photo-36090553.jpeg" alt="Món ăn nóng được nấu trong nồi đất">
+        <div class="card-body">
+         <h4 data-template-id="food-thangco-title" class="canva-text font-bold text-[#123c32]" style="color: rgb(18, 60, 50); font-weight: 700; font-style: normal; font-size: 16px;">Thắng cố ngựa</h4>
+         <p data-template-id="food-thangco-desc" class="canva-text mt-2 text-sm leading-6 text-[#527265]" style="color: rgb(82, 114, 101); font-weight: 400; font-style: normal; font-size: 16px;">Hương vị đậm đà, ấm áp trong không khí se lạnh vùng cao.</p>
+        </div>
+       </article>
+       <article class="experience-card reveal">
+        <img data-template-id="food-salmon-image" class="canva-image" loading="lazy" src="https://images.pexels.com/photos/17585461/pexels-photo-17585461.jpeg" alt="Món cá hồi được bày biện tinh tế">
+        <div class="card-body">
+         <h4 data-template-id="food-salmon-title" class="canva-text font-bold text-[#123c32]" style="color: rgb(18, 60, 50); font-weight: 700; font-style: normal; font-size: 16px;">Cá hồi/Cá tầm Sa Pa</h4>
+         <p data-template-id="food-salmon-desc" class="canva-text mt-2 text-sm leading-6 text-[#527265]" style="color: rgb(82, 114, 101); font-weight: 400; font-style: normal; font-size: 16px;">Đặc sản từ nguồn nước mát lành của núi rừng Sa Pa.</p>
+        </div>
+       </article>
+       <article class="experience-card reveal">
+        <img data-template-id="food-pork-image" class="canva-image" loading="lazy" src="https://images.pexels.com/photos/29841945/pexels-photo-29841945.jpeg" alt="Nướng lợn truyền thống ngoài trời">
+        <div class="card-body">
+         <h4 data-template-id="food-pork-title" class="canva-text font-bold text-[#123c32]" style="color: rgb(18, 60, 50); font-weight: 700; font-style: normal; font-size: 16px;">Lợn cắp nách</h4>
+         <p data-template-id="food-pork-desc" class="canva-text mt-2 text-sm leading-6 text-[#527265]" style="color: rgb(82, 114, 101); font-weight: 400; font-style: normal; font-size: 16px;">Món nướng dân dã gợi nhịp sống mộc mạc vùng cao.</p>
+        </div>
+       </article>
+       <article class="experience-card reveal">
+        <img data-template-id="food-rice-image" class="canva-image" loading="lazy" src="https://images.pexels.com/photos/34152806/pexels-photo-34152806.jpeg" alt="Giỏ xôi nhiều màu truyền thống">
+        <div class="card-body">
+         <h4 data-template-id="food-rice-title" class="canva-text font-bold text-[#123c32]" style="color: rgb(18, 60, 50); font-weight: 700; font-style: normal; font-size: 16px;">Xôi bảy màu</h4>
+         <p data-template-id="food-rice-desc" class="canva-text mt-2 text-sm leading-6 text-[#527265]" style="color: rgb(82, 114, 101); font-weight: 400; font-style: normal; font-size: 16px;">Sắc màu tự nhiên kể câu chuyện văn hóa của đồng bào.</p>
+        </div>
+       </article>
+      </div>
+     </div>
+     <div class="mt-14">
+      <h3 data-template-id="festival-heading" class="canva-text display text-3xl text-[#123c32]" style="color: rgb(18, 60, 50); font-weight: 700; font-style: normal; font-size: 19px;">Sắc màu lễ hội</h3>
+      <div class="mt-6 grid gap-5 md:grid-cols-3">
+       <article class="experience-card reveal">
+        <img data-template-id="fest-horse-image" class="canva-image" loading="lazy" src="https://images.pexels.com/photos/32752135/pexels-photo-32752135.jpeg" alt="Cuộc đua ngựa sôi động tại lễ hội Bắc Hà">
+        <div class="card-body">
+         <h4 data-template-id="fest-horse-title" class="canva-text font-bold text-[#123c32]" style="color: rgb(18, 60, 50); font-weight: 700; font-style: normal; font-size: 16px;">Lễ hội đua ngựa Bắc Hà</h4>
+         <p data-template-id="fest-horse-desc" class="canva-text mt-2 text-sm leading-6 text-[#527265]" style="color: rgb(82, 114, 101); font-weight: 400; font-style: normal; font-size: 16px;">Nhịp vó rộn ràng giữa không gian hội hè vùng cao.</p>
+        </div>
+       </article>
+       <article class="experience-card reveal">
+        <img data-template-id="fest-gautao-image" class="canva-image" loading="lazy" src="https://images.pexels.com/photos/23984033/pexels-photo-23984033.jpeg" alt="Biểu diễn múa truyền thống gần thác nước ở Lào Cai">
+        <div class="card-body">
+         <h4 data-template-id="fest-gautao-title" class="canva-text font-bold text-[#123c32]" style="color: rgb(18, 60, 50); font-weight: 700; font-style: normal; font-size: 16px;">Lễ hội Gầu Tào</h4>
+         <p data-template-id="fest-gautao-desc" class="canva-text mt-2 text-sm leading-6 text-[#527265]" style="color: rgb(82, 114, 101); font-weight: 400; font-style: normal; font-size: 16px;">Không gian gặp gỡ, cầu may và gìn giữ bản sắc H’Mông.</p>
+        </div>
+       </article>
+       <article class="experience-card reveal">
+        <img data-template-id="fest-chotinh-image" class="canva-image" loading="lazy" src="https://images.pexels.com/photos/34034051/pexels-photo-34034051.jpeg" alt="Phụ nữ H'Mông trong trang phục truyền thống tại Lào Cai">
+        <div class="card-body">
+         <h4 data-template-id="fest-chotinh-title" class="canva-text font-bold text-[#123c32]" style="color: rgb(18, 60, 50); font-weight: 700; font-style: normal; font-size: 16px;">Chợ tình</h4>
+         <p data-template-id="fest-chotinh-desc" class="canva-text mt-2 text-sm leading-6 text-[#527265]" style="color: rgb(82, 114, 101); font-weight: 400; font-style: normal; font-size: 16px;">Nét giao duyên giàu cảm xúc giữa âm nhạc và trang phục truyền thống.</p>
+        </div>
+       </article>
+      </div>
+     </div><button data-template-id="experience-button" type="button" class="canva-button secondary-btn mt-10" id="experience-button" style="background: transparent; color: rgb(18, 60, 50); font-weight: 700; font-style: normal; font-size: 16px;">Xem thêm trải nghiệm</button>
+     <p id="experience-note" class="hidden mt-4 text-sm font-medium text-[#3d6b42]">Mỗi trải nghiệm là một lời mời lắng nghe nhịp sống vùng cao.</p>
+    </div>
+   </section>
+   <section id="ban-do" class="section bg-[#e7eee0]">
+    <div class="site-width">
+     <div class="reveal-left max-w-2xl">
+      <p data-template-id="map-kicker" class="canva-text eyebrow text-[#b94732]" style="color: rgb(185, 71, 50); font-weight: 700; font-style: normal; font-size: 16px;">CHỌN CUNG ĐƯỜNG CỦA BẠN</p>
+      <h2 data-template-id="map-title" class="canva-text section-title mt-4" style="color: rgb(18, 60, 50); font-weight: 700; font-style: normal; font-size: 24px;">Vẽ nên hành trình của riêng bạn</h2>
+     </div>
+     <div class="mt-10 grid overflow-hidden rounded-[24px] bg-white shadow-[0_18px_44px_rgba(18,60,50,.12)] lg:grid-cols-[1.45fr_.8fr]">
+      <div class="map-art">
+       <div class="river"></div><button class="map-pin" data-pin="sapa" style="left:46%;top:37%" aria-label="Sa Pa"><i data-lucide="map-pin"></i></button><span class="map-label" style="left:49%;top:46%">Sa Pa</span> <button class="map-pin" data-pin="batsat" style="left:25%;top:25%" aria-label="Bát Xát"><i data-lucide="map-pin"></i></button><span class="map-label" style="left:28%;top:34%">Bát Xát</span> <button class="map-pin" data-pin="bacha" style="left:69%;top:30%" aria-label="Bắc Hà"><i data-lucide="map-pin"></i></button><span class="map-label" style="left:72%;top:39%">Bắc Hà</span> <button class="map-pin" data-pin="simacai" style="left:80%;top:17%" aria-label="Si Ma Cai"><i data-lucide="map-pin"></i></button><span class="map-label" style="left:72%;top:13%">Si Ma Cai</span> <button class="map-pin" data-pin="laocai" style="left:45%;top:66%" aria-label="Thành phố Lào Cai"><i data-lucide="map-pin"></i></button><span class="map-label" style="left:48%;top:75%">TP. Lào Cai</span> <button class="map-pin" data-pin="baoyen" style="left:65%;top:76%" aria-label="Bảo Yên"><i data-lucide="map-pin"></i></button><span class="map-label" style="left:68%;top:85%">Bảo Yên</span>
+      </div>
+      <aside class="p-7">
+       <p data-template-id="route-label" class="canva-text eyebrow text-[#b94732]" style="color: rgb(185, 71, 50); font-weight: 700; font-style: normal; font-size: 16px;">GỢI Ý HÀNH TRÌNH</p>
+       <div class="mt-4"><button class="route-btn active" data-route="batsat" type="button"><strong>Săn mây Y Tý</strong><span class="mt-1 block text-sm text-[#527265]">Bát Xát · Mây núi và ruộng bậc thang</span></button> <button class="route-btn" data-route="sapa" type="button"><strong>Một ngày ở Sa Pa</strong><span class="mt-1 block text-sm text-[#527265]">Sa Pa · Núi, bản làng và thác nước</span></button> <button class="route-btn" data-route="bacha" type="button"><strong>Sắc màu chợ phiên Bắc Hà</strong><span class="mt-1 block text-sm text-[#527265]">Bắc Hà · Văn hóa và nhịp chợ vùng cao</span></button>
+       </div>
+      </aside>
+     </div>
+    </div>
+   </section>
+  </main>
+  <footer id="lien-he" class="footer-bg">
+   <div class="motif"></div>
+   <div class="site-width grid gap-12 py-16 lg:grid-cols-[1.1fr_.8fr_1fr]">
+    <div>
+     <p data-template-id="footer-logo" class="canva-text text-xl font-bold tracking-[.23em]" style="color: rgb(255, 255, 255); font-weight: 700; font-style: normal; font-size: 16px;">LÀO CAI</p>
+     <p data-template-id="footer-tagline" class="canva-text display mt-4 max-w-xs text-2xl italic text-[#edbd54]" style="color: rgb(237, 189, 84); font-weight: 600; font-style: normal; font-size: 16px;">Nơi Đất Trời Gặp Gỡ</p>
+     <p data-template-id="footer-contact-name" class="canva-text mt-6 text-sm font-bold" style="color: rgb(255, 255, 255); font-weight: 700; font-style: normal; font-size: 16px;">Trung tâm Thông tin Du lịch Lào Cai</p>
+     <p data-template-id="footer-email" class="canva-text mt-2 text-sm text-[#c7d4c9]" style="color: rgb(199, 212, 201); font-weight: 400; font-style: normal; font-size: 16px;">Email: dulich@laocai.vn</p>
+     <p data-template-id="footer-phone" class="canva-text mt-1 text-sm text-[#c7d4c9]" style="color: rgb(199, 212, 201); font-weight: 400; font-style: normal; font-size: 16px;">Điện thoại: 0214 000 0000</p>
+     <div class="mt-5 flex gap-3">
+      <a href="#" class="rounded-full border border-white/25 p-2" aria-label="Facebook"><i data-lucide="facebook" class="h-4 w-4"></i></a><a href="#" class="rounded-full border border-white/25 p-2" aria-label="Instagram"><i data-lucide="instagram" class="h-4 w-4"></i></a><a href="#" class="rounded-full border border-white/25 p-2" aria-label="Youtube"><i data-lucide="youtube" class="h-4 w-4"></i></a>
+     </div>
+    </div>
+    <div>
+     <h2 data-template-id="footer-links-heading" class="canva-text font-bold text-[#edbd54]" style="color: rgb(237, 189, 84); font-weight: 700; font-style: normal; font-size: 24px;">Khám phá nhanh</h2>
+     <div class="mt-5 flex flex-col gap-3 text-sm">
+      <a href="#trang-chu">Trang chủ</a><a href="#diem-den">Điểm đến</a><a href="#van-hoa">Văn hóa &amp; Ẩm thực</a><a href="#ban-do">Bản đồ</a>
+     </div>
+    </div>
+    <div>
+     <h2 data-template-id="newsletter-heading" class="canva-text display text-2xl" style="color: rgb(255, 255, 255); font-weight: 600; font-style: normal; font-size: 24px;">Cẩm nang cho chuyến đi kế tiếp</h2>
+     <p data-template-id="newsletter-text" class="canva-text mt-3 text-sm leading-6 text-[#c7d4c9]" style="color: rgb(199, 212, 201); font-weight: 400; font-style: normal; font-size: 16px;">Đăng ký để nhận cảm hứng, gợi ý hành trình và cẩm nang khám phá Lào Cai miễn phí.</p>
+     <form id="newsletter-form" class="mt-5" novalidate=""><label for="newsletter-email" class="sr-only">Email của bạn</label>
+      <div class="flex flex-col gap-3 sm:flex-row">
+       <input id="newsletter-email" type="email" class="form-input" placeholder="Email của bạn" required=""><button data-template-id="newsletter-button" type="submit" class="canva-button primary-btn whitespace-nowrap" style="background: rgb(216, 157, 36); color: rgb(255, 255, 255); font-weight: 700; font-style: normal; font-size: 16px;">Đăng ký nhận cẩm nang</button>
+      </div>
+      <p id="newsletter-status" class="mt-3 text-sm" aria-live="polite"></p>
+     </form>
+    </div>
+   </div>
+  </footer>
+  <div id="destination-modal" class="modal" role="dialog" aria-modal="true" aria-label="Chi tiết điểm đến">
+   <div class="modal-content">
+    <button id="modal-close" type="button" class="modal-close" aria-label="Đóng chi tiết"><i data-lucide="x"></i></button>
+    <div id="modal-body"></div>
+   </div>
+  </div>
+  <script src="script.js"></script>
+ 
+</body></html>
